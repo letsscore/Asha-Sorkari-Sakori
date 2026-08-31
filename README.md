@@ -50,16 +50,8 @@ The UPI payment address is stored only in JavaScript configuration and is not re
 
 Never ask aspirants for UPI PIN, OTP, card PIN or banking passwords.
 
-## v4 owner bureau & performance notes
+## Important Firebase Rules deployment
 
-- Public Firebase reads use a short session cache to reduce repeated loading on navigation.
-- A service worker caches the local site shell for faster repeat visits on GitHub Pages.
-- Internal navigation shows immediate progress feedback so page transitions feel responsive.
-- Logout is no longer blocked on activity logging; activity logging is best-effort while sign-out proceeds.
-- The authenticated owner now gets an **Owner Console** link automatically in the site navigation after Firebase verifies the `admins/{uid}` flag.
-- The owner bureau includes a manual Refresh action and direct navigation to Aspirant Database, Tests and Jobs.
-- The owner console remains protected by Firebase Realtime Database rules; hiding the link is not used as security.
-- Premium checkout no longer launches a `upi://pay` intent directly. This avoids the security/intent rejection shown by some UPI apps.
-- Checkout displays a course-and-amount UPI QR. The UPI address is not printed on the aspirant-facing page.
-- QR generation is loaded only on the payment page. A bundled QR image exists as a fallback, so checkout does not depend on a third-party QR image service.
-- Aspirants still submit their UTR/reference after payment. Premium access remains manual-owner approval.
+The website files and the Firebase database rules must match. After uploading this website, publish the included `firebase-rtdb.rules.json` in the **Asha Sorkari Sakori** Firebase Realtime Database → Rules. Do not use the Let's Score school-education Firebase project.
+
+The login flow deliberately treats `lastLogin` and activity logging as non-blocking bookkeeping. A successful Firebase Authentication login will therefore not be reported as a failed login merely because an optional database write is temporarily denied while rules are being updated.
