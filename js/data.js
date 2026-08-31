@@ -5,7 +5,7 @@ export const EXAMS = [
   {id:"tet", name:"TET", tag:"TEACHER ELIGIBILITY", icon:"✓", desc:"Preparation resources and practice for Teacher Eligibility Tests."}
 ];
 
-export const PAYMENT = { upiId: "ADD-YOUR-UPI-ID-HERE" };
+export const PAYMENT = { upiId: "hussain.abidur@ybl", payeeName: "Asha Sorkari Sakori" };
 
 export const COURSES = [
   {

@@ -1,5 +1,5 @@
 import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile,dbSet,friendlyFirebaseError} from "./firebase.js";
-import {header,footer} from "./ui.js";
+import {header,footer,trackActivity} from "./ui.js";
 header();footer();
 const msg=document.getElementById("form-msg");
 const setMsg=(text,type="error")=>{if(msg){msg.textContent=text;msg.className=`message ${type}`;}};
@@ -18,6 +18,7 @@ register?.addEventListener("submit",async e=>{
    const credential=await createUserWithEmailAndPassword(email,password);
    await updateProfile(credential.user,{displayName:name});
    await dbSet(`users/${credential.user.uid}`,{uid:credential.user.uid,name,email,targetExam,accountType:"student",createdAt:Date.now(),lastLogin:Date.now()});
+   await trackActivity(credential.user,"registration",{targetExam});
    location.href="dashboard.html";
  }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent="Create Free Account";}
 });
@@ -30,6 +31,7 @@ login?.addEventListener("submit",async e=>{
  try{
    const credential=await signInWithEmailAndPassword(email,password);
    await dbSet(`users/${credential.user.uid}/lastLogin`,Date.now());
+   await trackActivity(credential.user,"login");
    const next=new URLSearchParams(location.search).get("next");location.href=next||"dashboard.html";
  }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent="Login";}
 });
