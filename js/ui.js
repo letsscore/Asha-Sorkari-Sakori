@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signOut, dbPush, dbSet } from './firebase.js';
+import { onAuthStateChanged, signOut, dbPush, dbSet, dbGet } from './firebase.js';
 
 const base = location.pathname.includes('/admin/') ? '../' : '';
 
@@ -39,6 +39,28 @@ export function header(){
       auth.textContent='Dashboard'; auth.href=`${base}dashboard.html`; auth.classList.add('nav-dashboard');
       reg.textContent='Logout'; reg.href='#'; reg.classList.remove('nav-register'); reg.classList.add('nav-logout');
       reg.onclick=e=>{e.preventDefault(); logout(base+'index.html');};
+
+      // Owner-only navigation. This is only a convenience link; Firebase Rules remain the real security boundary.
+      const adminKey=`ass_admin_${user.uid}`;
+      const showOwner=ok=>{
+        if(!ok || document.getElementById('owner-console-link')) return;
+        const link=document.createElement('a');
+        link.id='owner-console-link';
+        link.href=`${base}admin/index.html`;
+        link.textContent='Owner Console';
+        link.className='nav-owner';
+        link.title='Private owner dashboard';
+        document.getElementById('nav-links')?.insertBefore(link,document.querySelector('.nav-divider'));
+      };
+      try{
+        const cached=sessionStorage.getItem(adminKey);
+        if(cached==='1') showOwner(true);
+        else if(cached!=='0') dbGet(`admins/${user.uid}`).then(s=>{
+          const ok=s.exists() && s.val()===true;
+          try{sessionStorage.setItem(adminKey,ok?'1':'0');}catch(_){ }
+          showOwner(ok);
+        }).catch(()=>{});
+      }catch(_){ dbGet(`admins/${user.uid}`).then(s=>showOwner(s.exists()&&s.val()===true)).catch(()=>{}); }
     }
   });
 }
