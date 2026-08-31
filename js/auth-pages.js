@@ -1,48 +1,35 @@
-import {
-  firebaseEnabled,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-  dbSet
-} from "./firebase.js";
-import { header, footer } from "./ui.js";
-
-header();
-footer();
-
-const msg = document.getElementById("form-msg");
-
-if (!firebaseEnabled && msg) {
-  msg.textContent = "Student accounts will be enabled after the dedicated Asha-Sorkari-Sakori Firebase project is connected.";
-}
-
-document.getElementById("login-form")?.addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!firebaseEnabled) { msg.textContent = "Firebase setup is required before login can be used."; return; }
-  msg.textContent = "Signing in…";
-  try {
-    await signInWithEmailAndPassword(email.value.trim(), password.value);
-    location.href = "dashboard.html";
-  } catch (x) {
-    msg.textContent = x.message;
-  }
+import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile,dbSet,friendlyFirebaseError} from "./firebase.js";
+import {header,footer} from "./ui.js";
+header();footer();
+const msg=document.getElementById("form-msg");
+const setMsg=(text,type="error")=>{if(msg){msg.textContent=text;msg.className=`message ${type}`;}};
+const register=document.getElementById("register-form");
+register?.addEventListener("submit",async e=>{
+ e.preventDefault();
+ const name=document.getElementById("name").value.trim();
+ const email=document.getElementById("email").value.trim().toLowerCase();
+ const password=document.getElementById("password").value;
+ const targetExam=document.getElementById("target-exam")?.value||"";
+ const button=register.querySelector("button[type=submit]");
+ if(name.length<2)return setMsg("Please enter your full name.");
+ if(password.length<6)return setMsg("Password should be at least 6 characters.");
+ button.disabled=true;button.textContent="Creating account…";setMsg("Creating your free account…","info");
+ try{
+   const credential=await createUserWithEmailAndPassword(email,password);
+   await updateProfile(credential.user,{displayName:name});
+   await dbSet(`users/${credential.user.uid}`,{uid:credential.user.uid,name,email,targetExam,accountType:"student",createdAt:Date.now(),lastLogin:Date.now()});
+   location.href="dashboard.html";
+ }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent="Create Free Account";}
 });
-
-document.getElementById("register-form")?.addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!firebaseEnabled) { msg.textContent = "Firebase setup is required before registration can be used."; return; }
-  msg.textContent = "Creating account…";
-  try {
-    const c = await createUserWithEmailAndPassword(email.value.trim(), password.value);
-    await updateProfile(c.user, { displayName: name.value.trim() });
-    await dbSet("users/" + c.user.uid, {
-      uid: c.user.uid,
-      name: name.value.trim(),
-      email: c.user.email,
-      createdAt: Date.now()
-    });
-    location.href = "dashboard.html";
-  } catch (x) {
-    msg.textContent = x.message;
-  }
+const login=document.getElementById("login-form");
+login?.addEventListener("submit",async e=>{
+ e.preventDefault();
+ const email=document.getElementById("email").value.trim().toLowerCase();
+ const password=document.getElementById("password").value;
+ const button=login.querySelector("button[type=submit]");button.disabled=true;button.textContent="Signing in…";setMsg("Signing you in…","info");
+ try{
+   const credential=await signInWithEmailAndPassword(email,password);
+   await dbSet(`users/${credential.user.uid}/lastLogin`,Date.now());
+   const next=new URLSearchParams(location.search).get("next");location.href=next||"dashboard.html";
+ }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent="Login";}
 });
