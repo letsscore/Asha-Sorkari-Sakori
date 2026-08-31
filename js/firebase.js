@@ -1,5 +1,10 @@
 import { firebaseConfig } from './firebase-config.js';
 
+// Cache the local app shell so repeat navigation feels instant on GitHub Pages.
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register(location.pathname.includes('/admin/')?'../sw.js':'./sw.js').catch(()=>{}),{once:true});
+}
+
 let firebasePromise;
 async function loadFirebase(){
   if(firebasePromise) return firebasePromise;

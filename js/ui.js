@@ -30,6 +30,7 @@ export function header(){
     </div>
   </header>`;
   document.getElementById('menu-toggle')?.addEventListener('click',()=>document.getElementById('nav-links')?.classList.toggle('open'));
+  if(!document.getElementById('page-progress')){const bar=document.createElement('div');bar.id='page-progress';document.body.appendChild(bar);document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||e.defaultPrevented||a.target==='_blank'||a.origin!==location.origin||a.hash&&a.pathname===location.pathname)return;bar.classList.remove('run');void bar.offsetWidth;bar.classList.add('run');},{passive:true});}
   onAuthStateChanged(user=>{
     const auth = document.getElementById('auth-link');
     const reg = document.getElementById('register-link');
@@ -37,7 +38,7 @@ export function header(){
     if(user){
       auth.textContent='Dashboard'; auth.href=`${base}dashboard.html`; auth.classList.add('nav-dashboard');
       reg.textContent='Logout'; reg.href='#'; reg.classList.remove('nav-register'); reg.classList.add('nav-logout');
-      reg.onclick=async e=>{e.preventDefault(); await logout(base+'index.html');};
+      reg.onclick=e=>{e.preventDefault(); logout(base+'index.html');};
     }
   });
 }
