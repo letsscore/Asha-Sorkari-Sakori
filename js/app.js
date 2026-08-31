@@ -1,11 +1,231 @@
-import{auth,db,ref,get,push,set,onAuthStateChanged}from"./firebase.js";import{EXAMS,DEMO_TESTS}from"./data.js";import{header,footer,esc}from"./ui.js";header();footer();const $=id=>document.getElementById(id);function cards(el){if(el)el.innerHTML=EXAMS.map(e=>`<article class="card"><span class="pill">${esc(e.tag)}</span><h3>${esc(e.name)}</h3><p>${esc(e.desc)}</p><a class="btn small" href="exam-details.html?exam=${e.id}">Explore</a></article>`).join("")}cards($("exam-grid"));
-async function tests(){const el=$("tests-grid");if(!el)return;let ts=DEMO_TESTS;try{const s=await get(ref(db,"tests"));if(s.exists())ts=Object.entries(s.val()).map(([id,v])=>({...v,id})).concat(DEMO_TESTS)}catch{}el.innerHTML=ts.map(t=>`<article class="card"><span class="pill">${esc(EXAMS.find(e=>e.id===t.examId)?.name||t.examId)}</span><h3>${esc(t.title)}</h3><p>${t.questions?.length||0} questions • ${t.duration||0} minutes</p><a class="btn small" href="test.html?test=${t.id}">Start Test</a></article>`).join("")}tests();
-const eid=new URLSearchParams(location.search).get("exam");if($("exam-details")){const e=EXAMS.find(x=>x.id===eid);$("exam-details").innerHTML=e?`<span class="pill">${esc(e.tag)}</span><h1>${esc(e.name)}</h1><p>${esc(e.desc)}</p><h2>Preparation Areas</h2><div class="grid"><div class="card"><h3>Practice</h3><p>Mock tests and question practice.</p></div><div class="card"><h3>Revision</h3><p>Current affairs and study resources.</p></div><div class="card"><h3>Performance</h3><p>Review submitted results.</p></div></div><br><a class="btn" href="mock-tests.html">View Mock Tests</a>`:`<div class="empty">Exam not found.</div>`}
-async function runTest(){const root=$("test-root");if(!root)return;const id=new URLSearchParams(location.search).get("test");let t=DEMO_TESTS.find(x=>x.id===id);try{const s=await get(ref(db,"tests/"+id));if(s.exists())t={...s.val(),id}}catch{}if(!t){root.innerHTML='<div class="empty">Test not found.</div>';return}onAuthStateChanged(auth,u=>{if(!u){root.innerHTML='<div class="details-card"><h1>'+esc(t.title)+'</h1><p>Please login to attempt this test.</p><a class="btn" href="login.html">Login</a></div>';return}root.innerHTML=`<div class="page-head"><div class="eyebrow">MOCK TEST</div><h1>${esc(t.title)}</h1><p>${t.questions.length} questions • ${t.duration} minutes</p></div><div class="timer" id="timer"></div><form id="test-form">${t.questions.map((q,i)=>`<div class="test-question"><h3>${i+1}. ${esc(q.text)}</h3>${q.options.map((o,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}" required>${esc(o)}</label>`).join("")}</div>`).join("")}<button class="btn" type="submit">Submit Test</button><p id="test-msg" class="message"></p></form>`;let sec=(t.duration||20)*60;const ti=setInterval(()=>{$("timer").textContent=`Time left: ${Math.floor(sec/60)}:${String(sec%60).padStart(2,"0")}`;if(sec--<=0){clearInterval(ti);$("test-form").requestSubmit()}},1000);$("test-form").addEventListener("submit",async e=>{e.preventDefault();clearInterval(ti);const f=new FormData(e.target);let score=0;const answers={};t.questions.forEach((q,i)=>{const a=Number(f.get("q"+i));answers[q.id]=a;if(a===q.answer)score++});const r=push(ref(db,"results"));await set(r,{testId:t.id,testTitle:t.title,userId:auth.currentUser.uid,score,total:t.questions.length,percentage:Math.round(score/t.questions.length*100),answers,submittedAt:Date.now()});location.href="result.html?id="+r.key})})}runTest();
-async function result(){const root=$("result-root");if(!root)return;const id=new URLSearchParams(location.search).get("id");const s=await get(ref(db,"results/"+id));if(!s.exists()){root.innerHTML='<div class="empty">Result not found.</div>';return}const r=s.val();root.innerHTML=`<div class="details-card"><div class="eyebrow">TEST RESULT</div><h1>${esc(r.testTitle)}</h1><div class="result-score">${r.score}/${r.total}</div><h2 style="text-align:center">${r.percentage}%</h2><p style="text-align:center">Submitted successfully.</p><div style="text-align:center"><a class="btn" href="mock-tests.html">More Tests</a></div></div>`}result();
-async function dash(){const n=$("student-name");if(!n)return;onAuthStateChanged(auth,async u=>{if(!u){location.href="login.html";return}n.textContent=u.displayName||u.email.split("@")[0];const l=$("results-list");try{const s=await get(ref(db,"results"));const a=[];if(s.exists())Object.values(s.val()).forEach(r=>{if(r.userId===u.uid)a.push(r)});a.sort((x,y)=>(y.submittedAt||0)-(x.submittedAt||0));l.innerHTML=a.map(r=>`<div class="list-item"><b>${esc(r.testTitle)}</b><br>${r.score}/${r.total} (${r.percentage}%)</div>`).join("")||'<div class="empty">No results yet.</div>'}catch{l.innerHTML='<div class="empty">Could not load results.</div>'}})}dash();
-if($("affairs-list"))$("affairs-list").innerHTML='<article class="card"><h3>Current Affairs</h3><p>This section is ready for daily/monthly content from Firebase.</p></article>';if($("study-list"))$("study-list").innerHTML=EXAMS.map(e=>`<article class="card"><span class="pill">${e.name}</span><h3>Study Resources</h3><p>${e.desc}</p><a class="btn small" href="exam-details.html?exam=${e.id}">Open</a></article>`).join("");
-async function jobs(){const el=$("jobs-list");if(!el)return;let a=[];try{const s=await get(ref(db,"jobs"));if(s.exists())a=Object.entries(s.val()).map(([id,v])=>({...v,id}))}catch{}el.innerHTML=a.map(j=>`<article class="card"><h3>${esc(j.title)}</h3><p>${esc(j.organization||"")}</p><a class="btn small" href="job-details.html?id=${j.id}">View Details</a></article>`).join("")||'<div class="empty">No job listings have been published yet.</div>'}jobs();
-async function jd(){const el=$("job-details");if(!el)return;const id=new URLSearchParams(location.search).get("id");try{const s=await get(ref(db,"jobs/"+id));if(s.exists()){const j=s.val();el.innerHTML=`<div class="eyebrow">GOVERNMENT JOB</div><h1>${esc(j.title)}</h1><p>${esc(j.organization||"")}</p><p>${esc(j.description||"")}</p>${j.applyUrl?`<a class="btn" target="_blank" href="${esc(j.applyUrl)}">Official Apply Link</a>`:""}`;return}}catch{}el.innerHTML='<div class="empty">Job not found.</div>'}jd();
-for(const p of ["users","tests","questions","jobs"]){const el=$("admin-"+p);if(el)get(ref(db,p)).then(s=>{el.innerHTML=s.exists()?`<div class="table-wrap"><table class="admin-table"><tr><th>ID</th><th>Data</th></tr>${Object.entries(s.val()).map(([id,v])=>`<tr><td>${esc(id)}</td><td><pre>${esc(JSON.stringify(v,null,2))}</pre></td></tr>`).join("")}</table></div>`:`<div class="empty">No ${p} data.</div>`}).catch(()=>el.innerHTML='<div class="empty">Check Firebase configuration/rules.</div>')}
-onAuthStateChanged(auth,u=>{const l=$("auth-link");if(l&&u){l.textContent="Dashboard";l.href="dashboard.html"}});
+import { auth, db, ref, get, push, set, onAuthStateChanged, firebaseEnabled } from "./firebase.js";
+import { EXAMS, DEMO_TESTS } from "./data.js";
+import { header, footer, esc } from "./ui.js";
+
+header();
+footer();
+const $ = id => document.getElementById(id);
+
+function renderExamCards() {
+  const el = $("exam-grid");
+  if (!el) return;
+  el.innerHTML = EXAMS.map(e => `
+    <article class="card exam-card">
+      <span class="pill">${esc(e.tag)}</span>
+      <h3>${esc(e.name)}</h3>
+      <p>${esc(e.desc)}</p>
+      <a class="btn small" href="exam-details.html?exam=${encodeURIComponent(e.id)}">Explore</a>
+    </article>
+  `).join("");
+}
+renderExamCards();
+
+function firebaseNotice() {
+  if (firebaseEnabled) return "";
+  return `<div class="empty" style="margin-bottom:18px"><strong>Firebase setup pending</strong><br>Static pages are working. Add the dedicated Asha-Sorkari-Sakori Firebase configuration in <code>js/firebase-config.js</code> to enable accounts, live tests, results and admin data.</div>`;
+}
+
+async function renderTests() {
+  const el = $("tests-grid");
+  if (!el) return;
+  let tests = [...DEMO_TESTS];
+  if (firebaseEnabled && db) {
+    try {
+      const snap = await get(ref(db, "tests"));
+      if (snap.exists()) {
+        tests = Object.entries(snap.val()).map(([id, value]) => ({ ...value, id })).concat(DEMO_TESTS);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  el.innerHTML = firebaseNotice() + tests.map(t => `
+    <article class="card">
+      <span class="pill">${esc(EXAMS.find(e => e.id === t.examId)?.name || t.examId)}</span>
+      <h3>${esc(t.title)}</h3>
+      <p>${t.questions?.length || 0} questions • ${t.duration || 0} minutes</p>
+      <a class="btn small" href="test.html?test=${encodeURIComponent(t.id)}">Start Test</a>
+    </article>
+  `).join("");
+}
+renderTests();
+
+const examId = new URLSearchParams(location.search).get("exam");
+if ($("exam-details")) {
+  const exam = EXAMS.find(e => e.id === examId);
+  $("exam-details").innerHTML = exam ? `
+    <span class="pill">${esc(exam.tag)}</span>
+    <h1>${esc(exam.name)}</h1>
+    <p>${esc(exam.desc)}</p>
+    <h2>Preparation Areas</h2>
+    <div class="grid">
+      <div class="card"><h3>Practice</h3><p>Mock tests and question practice designed around the target examination.</p></div>
+      <div class="card"><h3>Revision</h3><p>Current affairs, subject revision and examination-focused study resources.</p></div>
+      <div class="card"><h3>Performance</h3><p>Attempt tests, submit answers and review your performance.</p></div>
+    </div>
+    <br><a class="btn" href="mock-tests.html">View Mock Tests</a>
+  ` : `<div class="empty">Exam not found.</div>`;
+}
+
+async function runTest() {
+  const root = $("test-root");
+  if (!root) return;
+  const id = new URLSearchParams(location.search).get("test");
+  let test = DEMO_TESTS.find(x => x.id === id);
+
+  if (firebaseEnabled && db) {
+    try {
+      const snap = await get(ref(db, "tests/" + id));
+      if (snap.exists()) test = { ...snap.val(), id };
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  if (!test) {
+    root.innerHTML = '<div class="empty">Test not found.</div>';
+    return;
+  }
+
+  if (!firebaseEnabled || !auth) {
+    root.innerHTML = `<div class="details-card"><div class="eyebrow">${esc(test.title)}</div><h1>Firebase setup required</h1><p>The test is included in the website, but student login and result submission require the dedicated Asha-Sorkari-Sakori Firebase project.</p><a class="btn" href="login.html">Go to Login</a></div>`;
+    return;
+  }
+
+  onAuthStateChanged(auth, user => {
+    if (!user) {
+      root.innerHTML = `<div class="details-card"><h1>${esc(test.title)}</h1><p>Please login to attempt this test.</p><a class="btn" href="login.html">Login</a></div>`;
+      return;
+    }
+
+    root.innerHTML = `
+      <div class="page-head"><div class="eyebrow">MOCK TEST</div><h1>${esc(test.title)}</h1><p>${test.questions.length} questions • ${test.duration} minutes</p></div>
+      <div class="timer" id="timer"></div>
+      <form id="test-form">
+        ${test.questions.map((q, i) => `<div class="test-question"><h3>${i + 1}. ${esc(q.text)}</h3>${q.options.map((o, j) => `<label class="option"><input type="radio" name="q${i}" value="${j}" required>${esc(o)}</label>`).join("")}</div>`).join("")}
+        <button class="btn" type="submit">Submit Test</button>
+        <p id="test-msg" class="message"></p>
+      </form>`;
+
+    let seconds = (test.duration || 20) * 60;
+    const timer = $("timer");
+    const form = $("test-form");
+    const interval = setInterval(() => {
+      timer.textContent = `Time left: ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+      if (seconds-- <= 0) { clearInterval(interval); form.requestSubmit(); }
+    }, 1000);
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      clearInterval(interval);
+      const data = new FormData(form);
+      let score = 0;
+      const answers = {};
+      test.questions.forEach((q, i) => {
+        const answer = Number(data.get("q" + i));
+        answers[q.id] = answer;
+        if (answer === q.answer) score++;
+      });
+      try {
+        const resultRef = push(ref(db, "results"));
+        await set(resultRef, { testId: test.id, testTitle: test.title, userId: auth.currentUser.uid, score, total: test.questions.length, percentage: Math.round(score / test.questions.length * 100), answers, submittedAt: Date.now() });
+        location.href = "result.html?id=" + resultRef.key;
+      } catch (error) {
+        $("test-msg").textContent = error.message;
+      }
+    });
+  });
+}
+runTest();
+
+async function renderResult() {
+  const root = $("result-root");
+  if (!root) return;
+  if (!firebaseEnabled || !db) {
+    root.innerHTML = '<div class="empty">Firebase is required to load submitted results.</div>';
+    return;
+  }
+  const id = new URLSearchParams(location.search).get("id");
+  try {
+    const snap = await get(ref(db, "results/" + id));
+    if (!snap.exists()) { root.innerHTML = '<div class="empty">Result not found.</div>'; return; }
+    const r = snap.val();
+    root.innerHTML = `<div class="details-card"><div class="eyebrow">TEST RESULT</div><h1>${esc(r.testTitle)}</h1><div class="result-score">${r.score}/${r.total}</div><h2 style="text-align:center">${r.percentage}%</h2><p style="text-align:center">Submitted successfully.</p><div style="text-align:center"><a class="btn" href="mock-tests.html">More Tests</a></div></div>`;
+  } catch (error) {
+    root.innerHTML = `<div class="empty">${esc(error.message)}</div>`;
+  }
+}
+renderResult();
+
+function renderDashboard() {
+  const nameEl = $("student-name");
+  if (!nameEl) return;
+  onAuthStateChanged(auth, async user => {
+    if (!user) { location.href = "login.html"; return; }
+    nameEl.textContent = user.displayName || user.email.split("@")[0];
+    const list = $("results-list");
+    if (!firebaseEnabled || !db) { list.innerHTML = '<div class="empty">Firebase setup is required for results.</div>'; return; }
+    try {
+      const snap = await get(ref(db, "results"));
+      const rows = [];
+      if (snap.exists()) Object.values(snap.val()).forEach(r => { if (r.userId === user.uid) rows.push(r); });
+      rows.sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
+      list.innerHTML = rows.map(r => `<div class="list-item"><b>${esc(r.testTitle)}</b><br>${r.score}/${r.total} (${r.percentage}%)</div>`).join("") || '<div class="empty">No results yet.</div>';
+    } catch { list.innerHTML = '<div class="empty">Could not load results.</div>'; }
+  });
+}
+renderDashboard();
+
+if ($("affairs-list")) {
+  $("affairs-list").innerHTML = '<article class="card"><h3>Current Affairs</h3><p>Revision-oriented current affairs for Assam and India competitive examinations.</p></article>';
+}
+
+if ($("study-list")) {
+  $("study-list").innerHTML = EXAMS.map(e => `<article class="card"><span class="pill">${esc(e.name)}</span><h3>Study Resources</h3><p>${esc(e.desc)}</p><a class="btn small" href="exam-details.html?exam=${encodeURIComponent(e.id)}">Open</a></article>`).join("");
+}
+
+async function renderJobs() {
+  const el = $("jobs-list");
+  if (!el) return;
+  let jobs = [];
+  if (firebaseEnabled && db) {
+    try { const snap = await get(ref(db, "jobs")); if (snap.exists()) jobs = Object.entries(snap.val()).map(([id, value]) => ({ ...value, id })); } catch (error) { console.error(error); }
+  }
+  el.innerHTML = jobs.map(j => `<article class="card"><h3>${esc(j.title)}</h3><p>${esc(j.organization || "")}</p><a class="btn small" href="job-details.html?id=${encodeURIComponent(j.id)}">View Details</a></article>`).join("") || '<div class="empty">No job listings have been published yet.</div>';
+}
+renderJobs();
+
+async function renderJobDetails() {
+  const el = $("job-details");
+  if (!el) return;
+  if (!firebaseEnabled || !db) { el.innerHTML = '<div class="empty">Firebase setup is required for live job details.</div>'; return; }
+  const id = new URLSearchParams(location.search).get("id");
+  try {
+    const snap = await get(ref(db, "jobs/" + id));
+    if (snap.exists()) {
+      const j = snap.val();
+      el.innerHTML = `<div class="eyebrow">GOVERNMENT JOB</div><h1>${esc(j.title)}</h1><p>${esc(j.organization || "")}</p><p>${esc(j.description || "")}</p>${j.applyUrl ? `<a class="btn" target="_blank" rel="noopener" href="${esc(j.applyUrl)}">Official Apply Link</a>` : ""}`;
+      return;
+    }
+  } catch (error) { console.error(error); }
+  el.innerHTML = '<div class="empty">Job not found.</div>';
+}
+renderJobDetails();
+
+async function renderAdminData() {
+  if (!firebaseEnabled || !db) return;
+  for (const key of ["users", "tests", "questions", "jobs"]) {
+    const el = $("admin-" + key);
+    if (!el) continue;
+    try {
+      const snap = await get(ref(db, key));
+      el.innerHTML = snap.exists() ? `<div class="table-wrap"><table class="admin-table"><tr><th>ID</th><th>Data</th></tr>${Object.entries(snap.val()).map(([id, value]) => `<tr><td>${esc(id)}</td><td><pre>${esc(JSON.stringify(value, null, 2))}</pre></td></tr>`).join("")}</table></div>` : `<div class="empty">No ${key} data.</div>`;
+    } catch { el.innerHTML = '<div class="empty">Check Firebase configuration/rules.</div>'; }
+  }
+}
+renderAdminData();
+
+onAuthStateChanged(auth, user => {
+  const link = $("auth-link");
+  if (link && user) { link.textContent = "Dashboard"; link.href = "dashboard.html"; }
+});
