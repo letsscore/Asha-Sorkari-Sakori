@@ -1,11 +1,2 @@
-// ASHA SORKARI SAKORI — Firebase configuration
-// This project is completely separate from Let's Score.
-export const firebaseConfig = {
-  apiKey: "AIzaSyAjVe-b0CcxpHnb90a95LTKqA8WO1O8v1g",
-  authDomain: "assam-exam-hub.firebaseapp.com",
-  databaseURL: "https://assam-exam-hub-default-rtdb.firebaseio.com",
-  projectId: "assam-exam-hub",
-  storageBucket: "assam-exam-hub.firebasestorage.app",
-  messagingSenderId: "10352656465",
-  appId: "1:10352656465:web:a72d2807e0df2826bf3870"
-};
+// Use a Firebase project dedicated ONLY to Asha-Sorkari-Sakori.
+export const firebaseConfig={apiKey:"REPLACE_WITH_ASHA_SORKARI_SAKORI_API_KEY",authDomain:"REPLACE_WITH_ASHA_SORKARI_SAKORI_AUTH_DOMAIN",databaseURL:"REPLACE_WITH_ASHA_SORKARI_SAKORI_DATABASE_URL",projectId:"REPLACE_WITH_ASHA_SORKARI_SAKORI_PROJECT_ID",storageBucket:"REPLACE_WITH_ASHA_SORKARI_SAKORI_STORAGE_BUCKET",messagingSenderId:"REPLACE_WITH_ASHA_SORKARI_SAKORI_MESSAGING_SENDER_ID",appId:"REPLACE_WITH_ASHA_SORKARI_SAKORI_APP_ID"};
