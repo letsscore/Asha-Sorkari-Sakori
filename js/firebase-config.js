@@ -1,2 +1,14 @@
-// Use a Firebase project dedicated ONLY to Asha-Sorkari-Sakori.
-export const firebaseConfig={apiKey:"REPLACE_WITH_ASHA_SORKARI_SAKORI_API_KEY",authDomain:"REPLACE_WITH_ASHA_SORKARI_SAKORI_AUTH_DOMAIN",databaseURL:"REPLACE_WITH_ASHA_SORKARI_SAKORI_DATABASE_URL",projectId:"REPLACE_WITH_ASHA_SORKARI_SAKORI_PROJECT_ID",storageBucket:"REPLACE_WITH_ASHA_SORKARI_SAKORI_STORAGE_BUCKET",messagingSenderId:"REPLACE_WITH_ASHA_SORKARI_SAKORI_MESSAGING_SENDER_ID",appId:"REPLACE_WITH_ASHA_SORKARI_SAKORI_APP_ID"};
+// Asha-Sorkari-Sakori ONLY
+// Dedicated Firebase project for competitive examinations
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDTUH4gyCI-Sd8kJUbKrRz9sFsv5TlPRqU",
+  authDomain: "asha-sorkari-sakori.firebaseapp.com",
+  databaseURL: "https://asha-sorkari-sakori-default-rtdb.firebaseio.com/",
+  projectId: "asha-sorkari-sakori",
+  storageBucket: "asha-sorkari-sakori.firebasestorage.app",
+  messagingSenderId: "413346141282",
+  appId: "1:413346141282:web:c57af354e23d552319ed3b"
+};
+
+export default firebaseConfig;
