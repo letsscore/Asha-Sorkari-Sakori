@@ -1,1 +1,81 @@
-{"rules":{".read":"auth != null",".write":"auth != null","users":{"$uid":{".read":"auth != null && auth.uid === $uid",".write":"auth != null && auth.uid === $uid"}},"results":{"$id":{".read":"auth != null && data.child('userId').val() === auth.uid",".write":"auth != null && (!data.exists() && newData.child('userId').val() === auth.uid || data.child('userId').val() === auth.uid)"}}}}
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "admins": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": false
+      }
+    },
+    "exams": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "tests": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "jobs": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "currentAffairs": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "courses": {
+      ".read": true,
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "courseContent": {
+      "$courseId": {
+        ".read": "($courseId === 'free-foundation' || root.child('courses').child($courseId).child('type').val() === 'free') || (auth != null && root.child('courseAccess').child(auth.uid).child($courseId).val() === true) || (auth != null && root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+        "purchases": {
+          "$purchaseId": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)"
+          }
+        },
+        "results": {
+          "$resultId": {
+            ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+            ".write": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)"
+          }
+        }
+      },
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "courseAccess": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)",
+        "$courseId": {
+          ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+        }
+      },
+      ".read": "auth != null && (auth.uid === $uid || root.child('admins').child(auth.uid).val() === true)"
+    },
+    "purchases": {
+      "$purchaseId": {
+        ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && (( !data.exists() && newData.child('userId').val() === auth.uid) || root.child('admins').child(auth.uid).val() === true)"
+      },
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    },
+    "results": {
+      "$legacyId": {
+        ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)",
+        ".write": "auth != null && ((!data.exists() && newData.child('userId').val() === auth.uid) || data.child('userId').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)"
+      },
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true"
+    }
+  }
+}

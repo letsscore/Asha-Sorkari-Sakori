@@ -1,0 +1,22 @@
+{
+  "courses": {
+    "free-foundation": {
+      "title": "Free Foundation",
+      "examId": "all",
+      "type": "free",
+      "price": 0,
+      "icon": "◈",
+      "desc": "A limited starter library for aspirants who want to experience the platform before choosing premium preparation.",
+      "highlights": ["GK — selected topics", "Aptitude — selected topics", "Reasoning — selected topics", "English — selected topics", "Basic exam guidance"]
+    },
+    "apsc-complete": {"title":"APSC Complete Preparation","examId":"apsc","type":"paid","price":499,"icon":"◎","desc":"Comprehensive APSC preparation with broad topic coverage, premium practice and important revision resources.","highlights":["Unlimited topic coverage","Premium mock tests","Assam-specific resources","Current-affairs revision","Important study resources"]},
+    "adre-complete": {"title":"ADRE Complete Preparation","examId":"adre","type":"paid","price":399,"icon":"◆","desc":"Complete ADRE-focused preparation with extensive practice, revision sets and premium resources.","highlights":["Unlimited topic coverage","Premium mock tests","Assam GK resources","Current-affairs revision","Important study resources"]},
+    "assam-police-complete": {"title":"Assam Police Complete Preparation","examId":"assam-police","type":"paid","price":349,"icon":"★","desc":"Dedicated Assam Police preparation with extensive practice, recruitment-focused revision and premium resources.","highlights":["Unlimited topic coverage","Premium practice sets","Premium mock tests","Assam-specific revision","Important resources"]},
+    "tet-complete": {"title":"TET Complete Preparation","examId":"tet","type":"paid","price":349,"icon":"✓","desc":"Complete TET preparation with extensive practice, revision, pedagogy resources and premium tests.","highlights":["Unlimited topic coverage","Premium mock tests","Pedagogy resources","Subject-wise practice","Important revision resources"]}
+  },
+  "courseContent": {
+    "free-foundation": {
+      "welcome": {"title":"Welcome to the Free Foundation","body":"This is a limited free course. Enrolment requires an aspirant account. Free coverage includes selected GK, aptitude, reasoning and English topics."}
+    }
+  }
+}
