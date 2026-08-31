@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, dbSet, friendlyFirebaseError } from './firebase.js';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, signOut, dbGet, dbSet, friendlyFirebaseError } from './firebase.js';
 import { header, footer, trackActivity } from './ui.js';
 header(); footer();
 const msg=document.getElementById('form-msg');
@@ -28,12 +28,22 @@ document.getElementById('login-form')?.addEventListener('submit',async e=>{
   button.disabled=true;button.textContent='Signing in…';setMsg('Checking your account…','info');
   try{
     const cred=await signInWithEmailAndPassword(email,password);
+    const deletedSnap=await dbGet(`deletedUsers/${cred.user.uid}`).catch(()=>null);
+    if(deletedSnap?.exists()){
+      await signOut().catch(()=>{});
+      return setMsg('This account has been removed by the site owner and can no longer access the website.');
+    }
     // Authentication success must not be blocked by optional database bookkeeping.
     // This is important when Firebase Rules are being updated/deployed.
     try {
-      await dbSet(`users/${cred.user.uid}/lastLogin`,Date.now());
+      const profileSnap=await dbGet(`users/${cred.user.uid}`);
+      if(profileSnap.exists()){
+        await dbSet(`users/${cred.user.uid}/lastLogin`,Date.now());
+      } else {
+        await dbSet(`users/${cred.user.uid}`,{uid:cred.user.uid,name:cred.user.displayName||email.split('@')[0],email,targetExam:'',accountType:'aspirant',createdAt:Date.now(),lastLogin:Date.now(),enrollments:{}});
+      }
     } catch (dbError) {
-      console.warn('Login succeeded, but lastLogin could not be saved:', dbError);
+      console.warn('Login succeeded, but profile bookkeeping could not be saved:', dbError);
     }
     try {
       await trackActivity(cred.user,'login');
