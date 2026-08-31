@@ -3,19 +3,17 @@
 Standalone competitive-examination preparation website.
 
 ## Scope
-APSC • ADRE • Assam Police • TET • Mock Tests • Current Affairs • Government Jobs • Study Resources • Student Authentication • Results • Admin panels.
+- APSC
+- ADRE
+- Assam Police
+- TET
+- Current Affairs
+- Government Jobs
+- Mock Tests
+- Study Resources
 
 ## Strict separation
-This repository is ONLY for **Asha-Sorkari-Sakori** and competitive examinations. It must not be mixed with the Let's Score school-education website.
+This repository is for **Asha-Sorkari-Sakori only**. It must not contain or reuse application logic, Firebase data, dashboards, tests, or school-education content from the **Let's Score** school-education website.
 
-## Setup
-1. Create/use a Firebase project dedicated to Asha-Sorkari-Sakori.
-2. Enable Email/Password Authentication and Realtime Database.
-3. Put that project's web configuration in `js/firebase-config.js`.
-4. Apply `firebase-rtdb.rules.json`.
-5. Deploy to GitHub Pages.
-
-## Database
-`users/{uid}`, `tests/{testId}`, `results/{resultId}`, `jobs/{jobId}`, `currentAffairs/{postId}`, `study/{resourceId}`.
-
-The demo tests in `js/data.js` allow the test interface to be checked before database tests are added.
+## Firebase
+The static website renders without Firebase. Before enabling student accounts, live tests, results, jobs, and admin data, replace the placeholders in `js/firebase-config.js` with credentials from a **dedicated Firebase project for Asha-Sorkari-Sakori**. Do not use the Let's Score Firebase project.
