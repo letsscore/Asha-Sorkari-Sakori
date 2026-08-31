@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Account — Asha Sorkari Sakori</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+<a class="logo" href="index.html">🏆 Asha Sorkari Sakori</a>
+<nav class="nav"><a href="index.html">Home</a><a href="login.html">Login</a></nav>
+</header>
+<main class="container">
+<section class="form-card">
+<span class="badge">STUDENT REGISTRATION</span>
+<h1>Create Account</h1>
+<p>Create your account for competitive-exam preparation.</p>
+<form id="registerForm">
+<div class="form-group"><label for="name">Full Name</label><input id="name" type="text" placeholder="Enter your full name" autocomplete="name" required></div>
+<div class="form-group"><label for="email">Email</label><input id="email" type="email" placeholder="Enter your email" autocomplete="email" required></div>
+<div class="form-group"><label for="password">Password</label><input id="password" type="password" placeholder="Minimum 6 characters" minlength="6" autocomplete="new-password" required></div>
+<div class="form-group"><label for="targetExam">Target Examination</label>
+<select id="targetExam" required>
+<option value="">Select examination</option>
+<option value="APSC">APSC</option>
+<option value="ADRE">Assam Direct Recruitment</option>
+<option value="ASSAM_POLICE">Assam Police</option>
+<option value="TET">TET</option>
+<option value="OTHER">Other Competitive Exam</option>
+</select></div>
+<div id="registerMessage" class="message"></div>
+<button class="btn" type="submit">Create Account</button>
+</form>
+<p>Already registered? <a href="login.html">Login</a></p>
+</section>
+</main>
+<footer>Asha Sorkari Sakori — Competitive Exam Preparation</footer>
+<script type="module" src="js/auth-pages.js"></script>
+</body>
+</html>
