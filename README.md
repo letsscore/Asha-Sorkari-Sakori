@@ -49,3 +49,14 @@ The website has local fallback course definitions in `js/data.js`. If the Fireba
 The UPI payment address is stored only in JavaScript configuration and is not rendered as visible text. Premium purchase pages generate a UPI QR with the course amount. Aspirants submit their UTR/reference after payment. Premium access is activated only after owner verification.
 
 Never ask aspirants for UPI PIN, OTP, card PIN or banking passwords.
+
+## v3 performance & UPI payment notes
+
+- Public Firebase reads use a short session cache to reduce repeated loading on navigation.
+- A service worker caches the local site shell for faster repeat visits on GitHub Pages.
+- Internal navigation shows immediate progress feedback so page transitions feel responsive.
+- Logout is no longer blocked on activity logging; activity logging is best-effort while sign-out proceeds.
+- Premium checkout no longer launches a `upi://pay` intent directly. This avoids the security/intent rejection shown by some UPI apps.
+- Checkout displays a course-and-amount UPI QR. The UPI address is not printed on the aspirant-facing page.
+- QR generation is loaded only on the payment page. A bundled QR image exists as a fallback, so checkout does not depend on a third-party QR image service.
+- Aspirants still submit their UTR/reference after payment. Premium access remains manual-owner approval.
