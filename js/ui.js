@@ -1,11 +1,71 @@
-import {onAuthStateChanged,signOut,dbPush,dbSet} from "./firebase.js";
-export function header(){
- const root=document.getElementById("site-header");if(!root)return;
- root.innerHTML=`<header class="site-header"><nav class="nav container"><a class="brand" href="index.html"><span class="brand-mark">AS</span><span><b>Asha Sorkari Sakori</b><small>Competitive Exam Preparation</small></span></a><button class="menu" id="menu" aria-label="Open menu">☰</button><div class="nav-links" id="links"><a href="index.html">Home</a><a href="exams.html">Exams</a><a href="courses.html">Courses</a><a href="mock-tests.html">Mock Tests</a><a href="current-affairs.html">Current Affairs</a><a href="jobs.html">Jobs</a><a href="study.html">Resources</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="nav-cta" href="login.html" id="auth-link">Login</a></div></nav></header>`;
- document.getElementById("menu")?.addEventListener("click",()=>document.getElementById("links")?.classList.toggle("open"));
- onAuthStateChanged(user=>{const link=document.getElementById("auth-link");if(!link)return;if(user){link.textContent="Dashboard";link.href="dashboard.html";link.classList.add("dashboard-link");const links=document.getElementById("links");if(!document.getElementById("logout-link")){const out=document.createElement("a");out.href="#";out.id="logout-link";out.textContent="Logout";links.appendChild(out);out.addEventListener("click",async e=>{e.preventDefault();await logout();});}}});
+import { onAuthStateChanged, signOut, dbPush, dbSet } from './firebase.js';
+
+const base = location.pathname.includes('/admin/') ? '../' : '';
+
+export function esc(value){
+  return String(value ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 }
-export function footer(){const root=document.getElementById("site-footer");if(root)root.innerHTML=`<footer><div class="container footer-inner"><div><strong>Asha Sorkari Sakori</strong><p>Independent competitive-examination preparation platform for Assam aspirants.</p><p><a href="mailto:sorkarisakori@gmail.com">sorkarisakori@gmail.com</a> · <a href="https://wa.me/917002137940" target="_blank" rel="noopener">WhatsApp: 7002137940</a></p></div><div class="footer-links"><a href="courses.html">Courses</a><a href="mock-tests.html">Mock Tests</a><a href="jobs.html">Jobs</a><a href="about.html">About Us</a><a href="contact.html">Contact Us</a><a href="privacy.html">Privacy Policy</a><a href="login.html">Aspirant Login</a></div></div><div class="container copyright">© ${new Date().getFullYear()} Asha Sorkari Sakori · Competitive Exams</div></footer>`;}
-export const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#039;"}[m]));
-export async function trackActivity(user,action,details={}){if(!user)return;try{const ref=await dbPush(`activity/${user.uid}`);await dbSet(`activity/${user.uid}/${ref.key}`,{userId:user.uid,email:user.email||"",action,details,createdAt:Date.now()});}catch(_){} }
-export async function logout(){const user=await new Promise(resolve=>{let done=false;onAuthStateChanged(u=>{if(!done){done=true;resolve(u);}})});if(user)await trackActivity(user,"logout");await signOut();location.href="index.html";}
+
+export function header(){
+  const root = document.getElementById('site-header');
+  if(!root) return;
+  root.innerHTML = `<header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="${base}index.html" aria-label="Asha Sorkari Sakori home">
+        <span class="brand-mark">AS</span>
+        <span class="brand-copy"><strong>Asha Sorkari Sakori</strong><small>Competitive Exam Preparation</small></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation">☰</button>
+      <nav class="nav-links" id="nav-links">
+        <a href="${base}exams.html">Exams</a>
+        <a href="${base}courses.html">Courses</a>
+        <a href="${base}mock-tests.html">Mock Tests</a>
+        <a href="${base}current-affairs.html">Current Affairs</a>
+        <a href="${base}jobs.html">Government Jobs</a>
+        <a href="${base}study.html">Resources</a>
+        <span class="nav-divider"></span>
+        <a href="${base}login.html" id="auth-link" class="nav-login">Login</a>
+        <a href="${base}register.html" id="register-link" class="nav-register">Create Account</a>
+      </nav>
+    </div>
+  </header>`;
+  document.getElementById('menu-toggle')?.addEventListener('click',()=>document.getElementById('nav-links')?.classList.toggle('open'));
+  onAuthStateChanged(user=>{
+    const auth = document.getElementById('auth-link');
+    const reg = document.getElementById('register-link');
+    if(!auth || !reg) return;
+    if(user){
+      auth.textContent='Dashboard'; auth.href=`${base}dashboard.html`; auth.classList.add('nav-dashboard');
+      reg.textContent='Logout'; reg.href='#'; reg.classList.remove('nav-register'); reg.classList.add('nav-logout');
+      reg.onclick=async e=>{e.preventDefault(); await logout(base+'index.html');};
+    }
+  });
+}
+
+export function footer(){
+  const root=document.getElementById('site-footer'); if(!root) return;
+  root.innerHTML=`<footer class="site-footer"><div class="container footer-grid">
+    <div><a class="brand footer-brand" href="${base}index.html"><span class="brand-mark">AS</span><span class="brand-copy"><strong>Asha Sorkari Sakori</strong><small>Competitive Exam Preparation</small></span></a><p>Focused preparation, practice and recruitment updates for competitive-exam aspirants.</p><div class="footer-contact"><a href="mailto:sorkarisakori@gmail.com">sorkarisakori@gmail.com</a><a href="https://wa.me/917002137940" target="_blank" rel="noopener">WhatsApp · 7002137940</a></div></div>
+    <div><h4>Prepare</h4><a href="${base}exams.html">Competitive Exams</a><a href="${base}courses.html">Free & Premium Courses</a><a href="${base}mock-tests.html">Mock Tests</a><a href="${base}study.html">Study Resources</a></div>
+    <div><h4>Stay Updated</h4><a href="${base}jobs.html">Government Jobs</a><a href="${base}current-affairs.html">Current Affairs</a><a href="${base}about.html">About Us</a><a href="${base}contact.html">Contact Us</a></div>
+    <div><h4>Legal</h4><a href="${base}privacy.html">Privacy Policy</a><a href="${base}login.html">Aspirant Login</a><a href="${base}register.html">Create Account</a></div>
+  </div><div class="container footer-bottom"><span>© ${new Date().getFullYear()} Asha Sorkari Sakori</span><span>Built exclusively for competitive-exam preparation.</span></div></footer>`;
+}
+
+export async function trackActivity(user, action, details={}){
+  if(!user) return;
+  try{
+    const ref=await dbPush(`activity/${user.uid}`);
+    await dbSet(`activity/${user.uid}/${ref.key}`,{userId:user.uid,email:user.email||'',action,details,createdAt:Date.now()});
+  }catch(_){ /* activity logging must never break the user flow */ }
+}
+
+export async function logout(destination='index.html'){
+  const user=await new Promise(resolve=>{let settled=false; onAuthStateChanged(u=>{if(!settled){settled=true;resolve(u);}});});
+  if(user) await trackActivity(user,'logout');
+  await signOut();
+  location.href=destination;
+}
+
+export function formatMoney(value){ return Number(value||0)===0 ? 'Free' : `₹${Number(value).toLocaleString('en-IN')}`; }
+export function formatDate(value){ return value ? new Date(value).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—'; }

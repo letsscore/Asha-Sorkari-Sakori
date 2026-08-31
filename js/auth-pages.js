@@ -1,37 +1,38 @@
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile,dbSet,friendlyFirebaseError} from "./firebase.js";
-import {header,footer,trackActivity} from "./ui.js";
-header();footer();
-const msg=document.getElementById("form-msg");
-const setMsg=(text,type="error")=>{if(msg){msg.textContent=text;msg.className=`message ${type}`;}};
-const register=document.getElementById("register-form");
-register?.addEventListener("submit",async e=>{
- e.preventDefault();
- const name=document.getElementById("name").value.trim();
- const email=document.getElementById("email").value.trim().toLowerCase();
- const password=document.getElementById("password").value;
- const targetExam=document.getElementById("target-exam")?.value||"";
- const button=register.querySelector("button[type=submit]");
- if(name.length<2)return setMsg("Please enter your full name.");
- if(password.length<6)return setMsg("Password should be at least 6 characters.");
- button.disabled=true;button.textContent="Creating account…";setMsg("Creating your free account…","info");
- try{
-   const credential=await createUserWithEmailAndPassword(email,password);
-   await updateProfile(credential.user,{displayName:name});
-   await dbSet(`users/${credential.user.uid}`,{uid:credential.user.uid,name,email,targetExam,accountType:"student",createdAt:Date.now(),lastLogin:Date.now()});
-   await trackActivity(credential.user,"registration",{targetExam});
-   location.href="dashboard.html";
- }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent="Create Free Account";}
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, updateProfile, dbSet, friendlyFirebaseError } from './firebase.js';
+import { header, footer, trackActivity } from './ui.js';
+header(); footer();
+const msg=document.getElementById('form-msg');
+function setMsg(text,type='error'){if(msg){msg.textContent=text;msg.className=`form-message ${type}`;}}
+const nextUrl=()=>new URLSearchParams(location.search).get('next') || 'dashboard.html';
+
+document.getElementById('register-form')?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const form=e.currentTarget, name=document.getElementById('name').value.trim(), email=document.getElementById('email').value.trim().toLowerCase(), password=document.getElementById('password').value, target=document.getElementById('target-exam')?.value||'';
+  const button=form.querySelector('button[type=submit]');
+  if(name.length<2) return setMsg('Please enter your full name.');
+  if(!email) return setMsg('Please enter your email address.');
+  if(password.length<6) return setMsg('Password must be at least 6 characters.');
+  button.disabled=true;button.textContent='Creating account…';setMsg('Setting up your aspirant account…','info');
+  try{
+    const cred=await createUserWithEmailAndPassword(email,password);
+    await updateProfile(cred.user,{displayName:name});
+    await dbSet(`users/${cred.user.uid}`,{uid:cred.user.uid,name,email,targetExam:target,accountType:'aspirant',createdAt:Date.now(),lastLogin:Date.now(),enrollments:{}});
+    await trackActivity(cred.user,'registration',{targetExam:target});
+    location.href=nextUrl();
+  }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent='Create Aspirant Account';}
 });
-const login=document.getElementById("login-form");
-login?.addEventListener("submit",async e=>{
- e.preventDefault();
- const email=document.getElementById("email").value.trim().toLowerCase();
- const password=document.getElementById("password").value;
- const button=login.querySelector("button[type=submit]");button.disabled=true;button.textContent="Signing in…";setMsg("Signing you in…","info");
- try{
-   const credential=await signInWithEmailAndPassword(email,password);
-   await dbSet(`users/${credential.user.uid}/lastLogin`,Date.now());
-   await trackActivity(credential.user,"login");
-   const next=new URLSearchParams(location.search).get("next");location.href=next||"dashboard.html";
- }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent="Login";}
+
+document.getElementById('login-form')?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const form=e.currentTarget,email=document.getElementById('email').value.trim().toLowerCase(),password=document.getElementById('password').value,button=form.querySelector('button[type=submit]');
+  button.disabled=true;button.textContent='Signing in…';setMsg('Checking your account…','info');
+  try{
+    const cred=await signInWithEmailAndPassword(email,password);
+    await dbSet(`users/${cred.user.uid}/lastLogin`,Date.now());
+    await trackActivity(cred.user,'login');
+    location.href=nextUrl();
+  }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent='Sign In';}
 });
+
+const reset=document.getElementById('reset-password');
+reset?.addEventListener('click',async e=>{e.preventDefault();const email=document.getElementById('email').value.trim().toLowerCase();if(!email)return setMsg('Enter your email address first.');try{await sendPasswordResetEmail(email);setMsg('Password reset email sent. Check your inbox.','success');}catch(error){setMsg(friendlyFirebaseError(error));}});
