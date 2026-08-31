@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, onAuthStateChanged as fbOnAuthStateChanged, createUserWithEmailAndPassword as fbCreateUser, signInWithEmailAndPassword as fbSignIn, signOut as fbSignOut, updateProfile as fbUpdateProfile } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getDatabase, ref as fbRef, get as fbGet, set as fbSet, push as fbPush } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 import { firebaseConfig } from "./firebase-config.js";
 
 const PLACEHOLDER = Object.values(firebaseConfig).some(v => String(v).includes("REPLACE_WITH_ASHA_SORKARI_SAKORI"));
@@ -8,53 +5,97 @@ export const firebaseEnabled = !PLACEHOLDER;
 
 let auth = null;
 let db = null;
-if (firebaseEnabled) {
-  try {
+let firebasePromise = null;
+
+async function loadFirebase() {
+  if (!firebaseEnabled) return { auth: null, db: null };
+  if (firebasePromise) return firebasePromise;
+
+  firebasePromise = (async () => {
+    const [{ initializeApp }, authMod, dbMod] = await Promise.all([
+      import("https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js")
+    ]);
     const app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getDatabase(app);
-  } catch (error) {
+    auth = authMod.getAuth(app);
+    db = dbMod.getDatabase(app);
+    return { auth, db, authMod, dbMod };
+  })().catch(error => {
+    firebasePromise = null;
     console.error("Asha Sorkari Sakori Firebase initialization failed:", error);
+    throw error;
+  });
+
+  return firebasePromise;
+}
+
+export async function getFirebase() {
+  return loadFirebase();
+}
+
+export async function getAuthInstance() {
+  const f = await loadFirebase();
+  return f.auth;
+}
+
+export async function getDbInstance() {
+  const f = await loadFirebase();
+  return f.db;
+}
+
+export async function onAuthStateChanged(callback) {
+  if (!firebaseEnabled) {
+    callback(null);
+    return () => {};
+  }
+  try {
+    const { auth, authMod } = await loadFirebase();
+    return authMod.onAuthStateChanged(auth, callback);
+  } catch (error) {
+    callback(null, error);
+    return () => {};
   }
 }
 
-export { auth, db };
-
-export function onAuthStateChanged(instance, callback) {
-  if (instance) return fbOnAuthStateChanged(instance, callback);
-  callback(null);
-  return () => {};
+export async function createUserWithEmailAndPassword(email, password) {
+  if (!firebaseEnabled) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
+  const { auth, authMod } = await loadFirebase();
+  return authMod.createUserWithEmailAndPassword(auth, email, password);
 }
 
-export function createUserWithEmailAndPassword(instance, email, password) {
-  if (!instance) return Promise.reject(new Error("Firebase is not configured for Asha Sorkari Sakori yet."));
-  return fbCreateUser(instance, email, password);
+export async function signInWithEmailAndPassword(email, password) {
+  if (!firebaseEnabled) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
+  const { auth, authMod } = await loadFirebase();
+  return authMod.signInWithEmailAndPassword(auth, email, password);
 }
-export function signInWithEmailAndPassword(instance, email, password) {
-  if (!instance) return Promise.reject(new Error("Firebase is not configured for Asha Sorkari Sakori yet."));
-  return fbSignIn(instance, email, password);
+
+export async function signOut() {
+  if (!firebaseEnabled) return;
+  const { auth, authMod } = await loadFirebase();
+  return authMod.signOut(auth);
 }
-export function signOut(instance) {
-  if (!instance) return Promise.resolve();
-  return fbSignOut(instance);
+
+export async function updateProfile(user, data) {
+  if (!firebaseEnabled) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
+  const { authMod } = await loadFirebase();
+  return authMod.updateProfile(user, data);
 }
-export function updateProfile(user, data) {
-  if (!user) return Promise.reject(new Error("No authenticated user."));
-  return fbUpdateProfile(user, data);
+
+export async function dbGet(path) {
+  if (!firebaseEnabled) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
+  const { db, dbMod } = await loadFirebase();
+  return dbMod.get(dbMod.ref(db, path));
 }
-export function ref(instance, path) {
-  if (!instance) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
-  return fbRef(instance, path);
+
+export async function dbSet(path, value) {
+  if (!firebaseEnabled) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
+  const { db, dbMod } = await loadFirebase();
+  return dbMod.set(dbMod.ref(db, path), value);
 }
-export function get(reference) {
-  if (!reference) return Promise.reject(new Error("Firebase is not configured for Asha Sorkari Sakori yet."));
-  return fbGet(reference);
-}
-export function set(reference, value) {
-  if (!reference) return Promise.reject(new Error("Firebase is not configured for Asha Sorkari Sakori yet."));
-  return fbSet(reference, value);
-}
-export function push(reference) {
-  if (!reference) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
-  return fbPush(reference);
+
+export async function dbPush(path) {
+  if (!firebaseEnabled) throw new Error("Firebase is not configured for Asha Sorkari Sakori yet.");
+  const { db, dbMod } = await loadFirebase();
+  return dbMod.push(dbMod.ref(db, path));
 }

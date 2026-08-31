@@ -1,4 +1,10 @@
-import { auth, db, ref, get, push, set, onAuthStateChanged, firebaseEnabled } from "./firebase.js";
+import {
+  firebaseEnabled,
+  onAuthStateChanged,
+  dbGet,
+  dbSet,
+  dbPush
+} from "./firebase.js";
 import { EXAMS, DEMO_TESTS } from "./data.js";
 import { header, footer, esc } from "./ui.js";
 
@@ -22,19 +28,17 @@ renderExamCards();
 
 function firebaseNotice() {
   if (firebaseEnabled) return "";
-  return `<div class="empty" style="margin-bottom:18px"><strong>Firebase setup pending</strong><br>Static pages are working. Add the dedicated Asha-Sorkari-Sakori Firebase configuration in <code>js/firebase-config.js</code> to enable accounts, live tests, results and admin data.</div>`;
+  return `<div class="empty" style="margin-bottom:18px"><strong>Student system setup pending</strong><br>The public website is ready. Accounts, live tests, results, jobs and admin data will activate after a dedicated Firebase project for Asha-Sorkari-Sakori is connected.</div>`;
 }
 
 async function renderTests() {
   const el = $("tests-grid");
   if (!el) return;
   let tests = [...DEMO_TESTS];
-  if (firebaseEnabled && db) {
+  if (firebaseEnabled) {
     try {
-      const snap = await get(ref(db, "tests"));
-      if (snap.exists()) {
-        tests = Object.entries(snap.val()).map(([id, value]) => ({ ...value, id })).concat(DEMO_TESTS);
-      }
+      const snap = await dbGet("tests");
+      if (snap.exists()) tests = Object.entries(snap.val()).map(([id, value]) => ({ ...value, id })).concat(DEMO_TESTS);
     } catch (error) {
       console.error(error);
     }
@@ -59,9 +63,9 @@ if ($("exam-details")) {
     <p>${esc(exam.desc)}</p>
     <h2>Preparation Areas</h2>
     <div class="grid">
-      <div class="card"><h3>Practice</h3><p>Mock tests and question practice designed around the target examination.</p></div>
-      <div class="card"><h3>Revision</h3><p>Current affairs, subject revision and examination-focused study resources.</p></div>
-      <div class="card"><h3>Performance</h3><p>Attempt tests, submit answers and review your performance.</p></div>
+      <div class="card"><h3>Practice</h3><p>Topic-wise questions, previous-style practice and examination-focused mock tests.</p></div>
+      <div class="card"><h3>Revision</h3><p>Current affairs, Assam-specific knowledge and subject-focused revision resources.</p></div>
+      <div class="card"><h3>Performance</h3><p>Attempt tests, submit answers and track your performance after Firebase is connected.</p></div>
     </div>
     <br><a class="btn" href="mock-tests.html">View Mock Tests</a>
   ` : `<div class="empty">Exam not found.</div>`;
@@ -73,26 +77,23 @@ async function runTest() {
   const id = new URLSearchParams(location.search).get("test");
   let test = DEMO_TESTS.find(x => x.id === id);
 
-  if (firebaseEnabled && db) {
+  if (firebaseEnabled) {
     try {
-      const snap = await get(ref(db, "tests/" + id));
+      const snap = await dbGet("tests/" + id);
       if (snap.exists()) test = { ...snap.val(), id };
     } catch (error) {
       console.error(error);
     }
   }
 
-  if (!test) {
-    root.innerHTML = '<div class="empty">Test not found.</div>';
+  if (!test) { root.innerHTML = '<div class="empty">Test not found.</div>'; return; }
+
+  if (!firebaseEnabled) {
+    root.innerHTML = `<div class="details-card"><div class="eyebrow">${esc(test.title)}</div><h1>Test system ready</h1><p>This practice test is included in the new platform. Student login and result submission will be activated after the dedicated Firebase project is connected.</p><a class="btn" href="register.html">Create Student Account</a></div>`;
     return;
   }
 
-  if (!firebaseEnabled || !auth) {
-    root.innerHTML = `<div class="details-card"><div class="eyebrow">${esc(test.title)}</div><h1>Firebase setup required</h1><p>The test is included in the website, but student login and result submission require the dedicated Asha-Sorkari-Sakori Firebase project.</p><a class="btn" href="login.html">Go to Login</a></div>`;
-    return;
-  }
-
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(user => {
     if (!user) {
       root.innerHTML = `<div class="details-card"><h1>${esc(test.title)}</h1><p>Please login to attempt this test.</p><a class="btn" href="login.html">Login</a></div>`;
       return;
@@ -118,6 +119,7 @@ async function runTest() {
     form.addEventListener("submit", async event => {
       event.preventDefault();
       clearInterval(interval);
+      form.querySelector("button[type=submit]").disabled = true;
       const data = new FormData(form);
       let score = 0;
       const answers = {};
@@ -127,11 +129,21 @@ async function runTest() {
         if (answer === q.answer) score++;
       });
       try {
-        const resultRef = push(ref(db, "results"));
-        await set(resultRef, { testId: test.id, testTitle: test.title, userId: auth.currentUser.uid, score, total: test.questions.length, percentage: Math.round(score / test.questions.length * 100), answers, submittedAt: Date.now() });
+        const resultRef = await dbPush("results");
+        await dbSet("results/" + resultRef.key, {
+          testId: test.id,
+          testTitle: test.title,
+          userId: user.uid,
+          score,
+          total: test.questions.length,
+          percentage: Math.round(score / test.questions.length * 100),
+          answers,
+          submittedAt: Date.now()
+        });
         location.href = "result.html?id=" + resultRef.key;
       } catch (error) {
         $("test-msg").textContent = error.message;
+        form.querySelector("button[type=submit]").disabled = false;
       }
     });
   });
@@ -141,32 +153,26 @@ runTest();
 async function renderResult() {
   const root = $("result-root");
   if (!root) return;
-  if (!firebaseEnabled || !db) {
-    root.innerHTML = '<div class="empty">Firebase is required to load submitted results.</div>';
-    return;
-  }
+  if (!firebaseEnabled) { root.innerHTML = '<div class="empty">Results will be available after the dedicated Firebase project is connected.</div>'; return; }
   const id = new URLSearchParams(location.search).get("id");
   try {
-    const snap = await get(ref(db, "results/" + id));
+    const snap = await dbGet("results/" + id);
     if (!snap.exists()) { root.innerHTML = '<div class="empty">Result not found.</div>'; return; }
     const r = snap.val();
     root.innerHTML = `<div class="details-card"><div class="eyebrow">TEST RESULT</div><h1>${esc(r.testTitle)}</h1><div class="result-score">${r.score}/${r.total}</div><h2 style="text-align:center">${r.percentage}%</h2><p style="text-align:center">Submitted successfully.</p><div style="text-align:center"><a class="btn" href="mock-tests.html">More Tests</a></div></div>`;
-  } catch (error) {
-    root.innerHTML = `<div class="empty">${esc(error.message)}</div>`;
-  }
+  } catch (error) { root.innerHTML = `<div class="empty">${esc(error.message)}</div>`; }
 }
 renderResult();
 
 function renderDashboard() {
   const nameEl = $("student-name");
   if (!nameEl) return;
-  onAuthStateChanged(auth, async user => {
+  onAuthStateChanged(async user => {
     if (!user) { location.href = "login.html"; return; }
     nameEl.textContent = user.displayName || user.email.split("@")[0];
     const list = $("results-list");
-    if (!firebaseEnabled || !db) { list.innerHTML = '<div class="empty">Firebase setup is required for results.</div>'; return; }
     try {
-      const snap = await get(ref(db, "results"));
+      const snap = await dbGet("results");
       const rows = [];
       if (snap.exists()) Object.values(snap.val()).forEach(r => { if (r.userId === user.uid) rows.push(r); });
       rows.sort((a, b) => (b.submittedAt || 0) - (a.submittedAt || 0));
@@ -177,7 +183,9 @@ function renderDashboard() {
 renderDashboard();
 
 if ($("affairs-list")) {
-  $("affairs-list").innerHTML = '<article class="card"><h3>Current Affairs</h3><p>Revision-oriented current affairs for Assam and India competitive examinations.</p></article>';
+  $("affairs-list").innerHTML = `
+    <article class="card"><h3>Assam & India Current Affairs</h3><p>Use this section for exam-oriented current affairs, important appointments, schemes, awards, sports, national events and Assam-specific developments.</p></article>
+    <article class="card"><h3>Revision Format</h3><p>Current-affairs content will be organised into daily, weekly and monthly revision sets as the platform develops.</p></article>`;
 }
 
 if ($("study-list")) {
@@ -187,10 +195,9 @@ if ($("study-list")) {
 async function renderJobs() {
   const el = $("jobs-list");
   if (!el) return;
+  if (!firebaseEnabled) { el.innerHTML = `${firebaseNotice()}<div class="empty">No live job listings yet.</div>`; return; }
   let jobs = [];
-  if (firebaseEnabled && db) {
-    try { const snap = await get(ref(db, "jobs")); if (snap.exists()) jobs = Object.entries(snap.val()).map(([id, value]) => ({ ...value, id })); } catch (error) { console.error(error); }
-  }
+  try { const snap = await dbGet("jobs"); if (snap.exists()) jobs = Object.entries(snap.val()).map(([id, value]) => ({ ...value, id })); } catch (error) { console.error(error); }
   el.innerHTML = jobs.map(j => `<article class="card"><h3>${esc(j.title)}</h3><p>${esc(j.organization || "")}</p><a class="btn small" href="job-details.html?id=${encodeURIComponent(j.id)}">View Details</a></article>`).join("") || '<div class="empty">No job listings have been published yet.</div>';
 }
 renderJobs();
@@ -198,10 +205,10 @@ renderJobs();
 async function renderJobDetails() {
   const el = $("job-details");
   if (!el) return;
-  if (!firebaseEnabled || !db) { el.innerHTML = '<div class="empty">Firebase setup is required for live job details.</div>'; return; }
+  if (!firebaseEnabled) { el.innerHTML = '<div class="empty">Live job details will be enabled with the dedicated Firebase project.</div>'; return; }
   const id = new URLSearchParams(location.search).get("id");
   try {
-    const snap = await get(ref(db, "jobs/" + id));
+    const snap = await dbGet("jobs/" + id);
     if (snap.exists()) {
       const j = snap.val();
       el.innerHTML = `<div class="eyebrow">GOVERNMENT JOB</div><h1>${esc(j.title)}</h1><p>${esc(j.organization || "")}</p><p>${esc(j.description || "")}</p>${j.applyUrl ? `<a class="btn" target="_blank" rel="noopener" href="${esc(j.applyUrl)}">Official Apply Link</a>` : ""}`;
@@ -213,19 +220,19 @@ async function renderJobDetails() {
 renderJobDetails();
 
 async function renderAdminData() {
-  if (!firebaseEnabled || !db) return;
+  if (!firebaseEnabled) return;
   for (const key of ["users", "tests", "questions", "jobs"]) {
     const el = $("admin-" + key);
     if (!el) continue;
     try {
-      const snap = await get(ref(db, key));
+      const snap = await dbGet(key);
       el.innerHTML = snap.exists() ? `<div class="table-wrap"><table class="admin-table"><tr><th>ID</th><th>Data</th></tr>${Object.entries(snap.val()).map(([id, value]) => `<tr><td>${esc(id)}</td><td><pre>${esc(JSON.stringify(value, null, 2))}</pre></td></tr>`).join("")}</table></div>` : `<div class="empty">No ${key} data.</div>`;
-    } catch { el.innerHTML = '<div class="empty">Check Firebase configuration/rules.</div>'; }
+    } catch { el.innerHTML = '<div class="empty">Check Firebase configuration and rules.</div>'; }
   }
 }
 renderAdminData();
 
-onAuthStateChanged(auth, user => {
+onAuthStateChanged(user => {
   const link = $("auth-link");
   if (link && user) { link.textContent = "Dashboard"; link.href = "dashboard.html"; }
 });
