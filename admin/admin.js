@@ -13,7 +13,7 @@ async function requireAdmin(){
     let settled=false;
     onAuthStateChanged(async user=>{
       if(settled)return; settled=true;
-      if(!user){location.href='../login.html?next='+encodeURIComponent(location.href);return;}
+      if(!user){location.href='../login.html?next='+encodeURIComponent(location.href);resolve(null);return;}
       const ok=await dbGet(`admins/${user.uid}`).catch(()=>null);
       if(!ok?.exists()||ok.val()!==true){
         document.querySelector('main').innerHTML=`<section class="section container narrow"><div class="access-card"><div class="access-icon">⛔</div><span class="eyebrow">PRIVATE OWNER AREA</span><h2>Admin access required</h2><p>This area is restricted to the owner/admin account configured in the Asha Sorkari Sakori Firebase database.</p><a class="btn" href="../dashboard.html">Back to Dashboard</a></div></section>`;
@@ -53,10 +53,10 @@ async function renderBureau(){
 
  root.innerHTML=`
  <div class="admin-top">
-  <div><span class="eyebrow">OWNER CONSOLE</span><h2>Aspirant Data Bureau</h2><p>Private operational control centre for Asha Sorkari Sakori.</p></div>
+  <div><span class="eyebrow">OWNER CONSOLE • PRIVATE</span><h2>Aspirant Data Bureau</h2><p>Registered aspirants, course demand, payments, results and activity — competitive-exam website only.</p></div>
   <div class="admin-user">Owner session<br><b>${esc(admin.email||'Authenticated')}</b></div>
  </div>
- <div class="admin-actions"><a class="btn secondary" href="users.html">👥 Aspirant Database</a><button class="btn" id="export-users">Export Aspirants CSV</button><button class="btn secondary" id="export-purchases">Export Payments CSV</button></div>
+ <div class="admin-actions"><a class="btn secondary" href="users.html">👥 Aspirant Database</a><a class="btn secondary" href="tests.html">📝 Tests</a><a class="btn secondary" href="jobs.html">📢 Jobs</a><button class="btn" id="refresh-bureau">↻ Refresh</button><button class="btn secondary" id="export-users">Export Aspirants CSV</button><button class="btn secondary" id="export-purchases">Export Payments CSV</button></div>
  <div class="admin-stats">
   <div><span>Total aspirants</span><strong>${U.length}</strong><small>All registered accounts</small></div>
   <div><span>Premium customers</span><strong>${activePremiumUsers}</strong><small>Approved premium access</small></div>
@@ -100,6 +100,7 @@ async function renderBureau(){
  root.querySelectorAll('[data-profile]').forEach(btn=>btn.onclick=()=>showProfile(btn.dataset.profile,U,P,R,A));
  $('profile-close').onclick=()=>$('profile-modal').classList.add('hidden');
  $('profile-modal').onclick=e=>{if(e.target.id==='profile-modal')e.currentTarget.classList.add('hidden');};
+ $('refresh-bureau').onclick=async()=>{const b=$('refresh-bureau');b.disabled=true;b.textContent='Refreshing…';try{await renderBureau();}finally{b.disabled=false;b.textContent='↻ Refresh';}};
  $('export-users').onclick=()=>downloadCSV('asha-sorkari-sakori-aspirants.csv',[['UID','Name','Email','Target Exam','Free Enrolled','Premium Access Count','Registered','Last Login'],...U.map(u=>[u.uid,u.name,u.email,examName(u.targetExam),u.enrollments?.['free-foundation']?'Yes':'No',P.filter(p=>p.userId===u.uid&&p.status==='approved').length,formatDate(u.createdAt),formatDate(u.lastLogin)])]);
  $('export-purchases').onclick=()=>downloadCSV('asha-sorkari-sakori-payments.csv',[['Purchase ID','UID','Aspirant','Email','Course','Amount','UTR','Status','Submitted','Verified'],...P.map(p=>[p.purchaseId,p.userId,p.userName,p.userEmail,p.courseTitle||courseName(p.courseId),p.amount,p.transactionId,p.status,formatDate(p.createdAt),formatDate(p.verifiedAt)])]);
  $('job-form').onsubmit=async e=>{e.preventDefault();const b=e.currentTarget.querySelector('button'),msg=$('job-msg');b.disabled=true;b.textContent='Publishing…';try{const ref=await dbPush('jobs');const now=Date.now();await dbSet(`jobs/${ref.key}`,{title:$('job-title').value.trim(),organization:$('job-org').value.trim(),postCount:$('job-posts').value.trim(),lastDate:$('job-last').value||'',description:$('job-desc').value.trim(),applyUrl:$('job-url').value.trim(),status:'OPEN',publishedAt:now,createdAt:now});msg.className='form-message success';msg.textContent='Vacancy published successfully.';e.currentTarget.reset();}catch(err){msg.className='form-message error';msg.textContent=err.message;}finally{b.disabled=false;b.textContent='Publish Vacancy';}};
