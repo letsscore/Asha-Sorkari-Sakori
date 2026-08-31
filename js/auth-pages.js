@@ -28,8 +28,18 @@ document.getElementById('login-form')?.addEventListener('submit',async e=>{
   button.disabled=true;button.textContent='Signing in…';setMsg('Checking your account…','info');
   try{
     const cred=await signInWithEmailAndPassword(email,password);
-    await dbSet(`users/${cred.user.uid}/lastLogin`,Date.now());
-    await trackActivity(cred.user,'login');
+    // Authentication success must not be blocked by optional database bookkeeping.
+    // This is important when Firebase Rules are being updated/deployed.
+    try {
+      await dbSet(`users/${cred.user.uid}/lastLogin`,Date.now());
+    } catch (dbError) {
+      console.warn('Login succeeded, but lastLogin could not be saved:', dbError);
+    }
+    try {
+      await trackActivity(cred.user,'login');
+    } catch (activityError) {
+      console.warn('Login succeeded, but activity could not be recorded:', activityError);
+    }
     location.href=nextUrl();
   }catch(error){setMsg(friendlyFirebaseError(error));button.disabled=false;button.textContent='Sign In';}
 });

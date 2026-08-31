@@ -1,10 +1,5 @@
 import { firebaseConfig } from './firebase-config.js';
 
-// Cache the local app shell so repeat navigation feels instant on GitHub Pages.
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register(location.pathname.includes('/admin/')?'../sw.js':'./sw.js').catch(()=>{}),{once:true});
-}
-
 let firebasePromise;
 async function loadFirebase(){
   if(firebasePromise) return firebasePromise;
@@ -71,7 +66,7 @@ export function friendlyFirebaseError(error){
     'auth/user-disabled':'This account has been disabled. Please contact support.',
     'auth/too-many-requests':'Too many attempts. Please wait and try again.',
     'auth/network-request-failed':'Network error. Please check your internet connection.',
-    'PERMISSION_DENIED':'Access was blocked by Firebase security rules. Please contact support if this continues.'
+    'PERMISSION_DENIED':'Your account was authenticated, but Firebase database access is not configured correctly yet. Please contact the site owner.'
   };
   return messages[code] || error?.message || 'Something went wrong. Please try again.';
 }
