@@ -54,4 +54,17 @@ Never ask aspirants for UPI PIN, OTP, card PIN or banking passwords.
 
 The website files and the Firebase database rules must match. After uploading this website, publish the included `firebase-rtdb.rules.json` in the **Asha Sorkari Sakori** Firebase Realtime Database → Rules. Do not use the Let's Score school-education Firebase project.
 
+**Security:** Use `admin/login.html` for owner authentication. Only the UID stored under `/admins/<UID>` with value `true` can open the owner bureau. Publishing the included RTDB rules is mandatory; the static admin URL alone does not grant database access.
+
 The login flow deliberately treats `lastLogin` and activity logging as non-blocking bookkeeping. A successful Firebase Authentication login will therefore not be reported as a failed login merely because an optional database write is temporarily denied while rules are being updated.
+
+## Owner deletion controls (v5.1)
+- The Owner Console now has a **Delete user** action in the full Aspirant Database.
+- Deleting an aspirant removes their Realtime Database profile, purchases, results, activity log and premium course-access records, and creates a `/deletedUsers/<UID>` tombstone so the same Firebase Authentication account is blocked from signing into the website again.
+- The owner account itself cannot be deleted from the console.
+- The Recruitment/Jobs owner page now has a **Delete** action for every published vacancy. Removing a vacancy removes it from the public jobs listing immediately.
+
+### Important limitation of a static GitHub Pages website
+Firebase Authentication user accounts cannot be deleted by a browser-only client using the normal Firebase Web SDK. The v5.1 owner delete action therefore deletes all website data and blocks the account at application level, but the underlying Firebase Authentication user remains in Firebase Authentication. If permanent Auth-user deletion is required, it must be performed from Firebase Authentication or through a trusted server/Cloud Function using the Firebase Admin SDK.
+
+After updating this version, publish the included `firebase-rtdb.rules.json` again. The rules now allow the owner to create deletion tombstones and remove activity records belonging to an aspirant while keeping aspirant activity creation restricted to the signed-in aspirant.
