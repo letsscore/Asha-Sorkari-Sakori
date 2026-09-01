@@ -1,0 +1,10 @@
+Free Foundation Course integration
+
+Categories:
+- General Knowledge: 5 topics, 50 practice questions, 30-question mock
+- Aptitude: 5 topics, 50 practice questions, 30-question mock
+- Reasoning: 5 topics, 50 practice questions, 30-question mock
+- English: 5 topics, 50 practice questions, 30-question mock
+
+The live website uses js/free-foundation-data.js and js/free-foundation.js.
+The source JSON files are retained here for future editing/reference.
