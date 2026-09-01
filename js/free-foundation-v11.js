@@ -102,7 +102,6 @@ export async function renderFreeFoundationCourse(root,user,course){
     content.innerHTML=`<div class="ff-section-head"><span class="eyebrow">START HERE</span><h2>Build the basics before premium preparation</h2><p>This limited foundation course covers the essential patterns an aspirant should know first. Premium courses remain separate for deeper and broader preparation.</p></div>
     <div class="ff-category-grid">${CATS.map(c=>`<article class="ff-category-card"><div class="ff-icon">${escText(c.title[0])}</div><span class="course-badge free">FREE</span><h3>${escText(c.title)}</h3><p>5 selected topics</p><div class="ff-mini-stats"><b>50</b><span>Practice</span><b>30</b><span>Mock</span></div><button class="btn small full" data-cat="${c.id}">Open Category</button></article>`).join('')}</div>
     <div class="ff-how"><div><b>01</b><h3>Read the notes</h3><p>Review the five selected foundation topics in each category.</p></div><div><b>02</b><h3>Practise 50 questions</h3><p>Attempt the category practice set and check your performance.</p></div><div><b>03</b><h3>Take the mock</h3><p>Finish a 30-question timed mock and save your result to your account.</p></div></div>`;
-    bindCategories();
   }
 
   function notes(){
