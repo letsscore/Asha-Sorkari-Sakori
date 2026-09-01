@@ -1,33 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>Free Foundation Course | Asha Sorkari Sakori</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Free Foundation Course | Asha Sorkari Sakori</title>
+<link rel="stylesheet" href="css/style.css?v=11">
 </head>
 <body>
-  <div id="site-header"></div>
-  <main>
-    <section class="section narrow container">
-      <div id="course-root"></div>
-    </section>
-  </main>
-  <div id="site-footer"></div>
-  <script>
-    // The old free-foundation.html was a static landing page and never loaded
-    // the live module engine. Send direct visits to the secured course router.
-    // This keeps the existing Firebase/auth/course-access flow intact.
-    (function () {
-      const params = new URLSearchParams(location.search);
-      const next = new URL('course.html', location.href);
-      next.searchParams.set('id', 'free-foundation');
-      if (params.get('module')) next.searchParams.set('module', params.get('module'));
-      location.replace(next.href);
-    })();
-  </script>
-</body>
-</html>
+<div id="site-header"></div>
+<main><section class="section narrow container"><div id="course-root"></div></section></main>
+<div id="site-footer"></div>
+<script>
+(function(){
+  const u=new URL(location.href);
+  if(u.searchParams.get('id')!=='free-foundation'){u.searchParams.set('id','free-foundation');history.replaceState(null,'',u.href);}
+})();
+</script>
+<script type="module" src="js/app.js?v=11"></script>
+</body></html>

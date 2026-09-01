@@ -1,0 +1,1 @@
+V11 fixes Free Foundation entry and category navigation. free-foundation.html now directly runs app.js with id=free-foundation; category buttons have explicit onclick binding. No Firebase rules/config changes.
