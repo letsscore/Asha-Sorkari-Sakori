@@ -1,0 +1,964 @@
+{
+  "title": "General Knowledge — Foundation",
+  "topics": [
+    [
+      "Indian Polity",
+      "Constitution, Fundamental Rights, Parliament, President, Prime Minister, elections and basic institutions."
+    ],
+    [
+      "History",
+      "Ancient India, Mauryas, Guptas, 1857 and freedom movement basics."
+    ],
+    [
+      "Geography",
+      "Physical geography, rivers, climate, states and India basics."
+    ],
+    [
+      "Assam GK",
+      "Assam geography, culture, biodiversity, rivers, parks and important basics."
+    ],
+    [
+      "General Science",
+      "Everyday physics, chemistry, biology, environment and human body basics."
+    ]
+  ],
+  "practice_questions": [
+    {
+      "id": 1,
+      "question": "Capital of Assam?",
+      "options": [
+        "Dispur",
+        "Guwahati",
+        "Jorhat",
+        "Dibrugarh"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 2,
+      "question": "Constitution of India came into force on?",
+      "options": [
+        "26 January 1950",
+        "15 August 1947",
+        "26 November 1949",
+        "2 October 1950"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 3,
+      "question": "Constitutional head of the Union?",
+      "options": [
+        "President",
+        "Prime Minister",
+        "Chief Justice",
+        "Speaker"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 4,
+      "question": "Upper house of Parliament?",
+      "options": [
+        "Rajya Sabha",
+        "Lok Sabha",
+        "Vidhan Sabha",
+        "Gram Sabha"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 5,
+      "question": "House directly elected by the people?",
+      "options": [
+        "Lok Sabha",
+        "Rajya Sabha",
+        "Supreme Court",
+        "Legislative Council"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 6,
+      "question": "Indian National Congress was founded in?",
+      "options": [
+        "1885",
+        "1905",
+        "1857",
+        "1947"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 7,
+      "question": "Revolt of 1857 began at?",
+      "options": [
+        "Meerut",
+        "Delhi",
+        "Kanpur",
+        "Lucknow"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 8,
+      "question": "Mauryan ruler associated with the Kalinga war?",
+      "options": [
+        "Ashoka",
+        "Akbar",
+        "Harsha",
+        "Samudragupta"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 9,
+      "question": "Gupta period is known for advances in?",
+      "options": [
+        "Science and arts",
+        "Only shipping",
+        "Only printing",
+        "Only modern industry"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 10,
+      "question": "Mountain system along India's north?",
+      "options": [
+        "Himalayas",
+        "Aravallis",
+        "Western Ghats",
+        "Eastern Ghats"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 11,
+      "question": "Largest Indian state by area?",
+      "options": [
+        "Rajasthan",
+        "Madhya Pradesh",
+        "Maharashtra",
+        "Uttar Pradesh"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 12,
+      "question": "Smallest Indian state by area?",
+      "options": [
+        "Goa",
+        "Sikkim",
+        "Tripura",
+        "Manipur"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 13,
+      "question": "Tropic of Cancer passes through?",
+      "options": [
+        "India",
+        "Sri Lanka",
+        "Nepal only",
+        "Bhutan only"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 14,
+      "question": "Ocean south of India?",
+      "options": [
+        "Indian Ocean",
+        "Pacific Ocean",
+        "Atlantic Ocean",
+        "Arctic Ocean"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 15,
+      "question": "Largest planet?",
+      "options": [
+        "Jupiter",
+        "Earth",
+        "Saturn",
+        "Mars"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 16,
+      "question": "Red Planet?",
+      "options": [
+        "Mars",
+        "Venus",
+        "Jupiter",
+        "Mercury"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 17,
+      "question": "Earth's natural satellite?",
+      "options": [
+        "Moon",
+        "Mars",
+        "Venus",
+        "Sun"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 18,
+      "question": "UN headquarters?",
+      "options": [
+        "New York",
+        "Geneva",
+        "Paris",
+        "London"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 19,
+      "question": "Currency of Japan?",
+      "options": [
+        "Yen",
+        "Won",
+        "Yuan",
+        "Dollar"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 20,
+      "question": "Main gas used by plants in photosynthesis?",
+      "options": [
+        "Carbon dioxide",
+        "Oxygen",
+        "Nitrogen",
+        "Hydrogen"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 21,
+      "question": "Water boils at standard pressure at?",
+      "options": [
+        "100°C",
+        "0°C",
+        "50°C",
+        "200°C"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 22,
+      "question": "SI unit of electric current?",
+      "options": [
+        "Ampere",
+        "Volt",
+        "Ohm",
+        "Watt"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 23,
+      "question": "Human heart mainly?",
+      "options": [
+        "Pumps blood",
+        "Digests food",
+        "Exchanges gases",
+        "Forms urine"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 24,
+      "question": "Organ mainly forming urine?",
+      "options": [
+        "Kidney",
+        "Liver",
+        "Heart",
+        "Lung"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 25,
+      "question": "Vitamin associated with sunlight?",
+      "options": [
+        "Vitamin D",
+        "Vitamin C",
+        "Vitamin B12",
+        "Vitamin K"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 26,
+      "question": "Food-making process in green plants?",
+      "options": [
+        "Photosynthesis",
+        "Respiration",
+        "Transpiration",
+        "Germination"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 27,
+      "question": "Water and minerals are mainly absorbed by?",
+      "options": [
+        "Roots",
+        "Flowers",
+        "Fruits",
+        "Seeds"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 28,
+      "question": "Kaziranga is famous for?",
+      "options": [
+        "One-horned rhinoceros",
+        "Asiatic lion",
+        "Snow leopard",
+        "Blackbuck"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 29,
+      "question": "Majuli is associated with?",
+      "options": [
+        "Brahmaputra",
+        "Ganga",
+        "Yamuna",
+        "Narmada"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 30,
+      "question": "Assam is especially famous for?",
+      "options": [
+        "Tea",
+        "Olives",
+        "Cocoa",
+        "Coffee"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 31,
+      "question": "Agricultural festival of Assam?",
+      "options": [
+        "Bihu",
+        "Onam",
+        "Pongal",
+        "Baisakhi"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 32,
+      "question": "One-horned rhinoceros is a major symbol of?",
+      "options": [
+        "Assam",
+        "Goa",
+        "Punjab",
+        "Rajasthan"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 33,
+      "question": "Central bank of India?",
+      "options": [
+        "Reserve Bank of India",
+        "State Bank of India",
+        "SEBI",
+        "NABARD"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 34,
+      "question": "GDP broadly measures?",
+      "options": [
+        "Final goods and services produced",
+        "Only exports",
+        "Only salaries",
+        "Only land"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 35,
+      "question": "Inflation generally means?",
+      "options": [
+        "Rise in general price level",
+        "Fall in population",
+        "Rise in rainfall",
+        "Fall in literacy"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 36,
+      "question": "Liquid metal at ordinary room temperature?",
+      "options": [
+        "Mercury",
+        "Iron",
+        "Copper",
+        "Aluminium"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 37,
+      "question": "Blood cells mainly fighting infection?",
+      "options": [
+        "White blood cells",
+        "Red blood cells",
+        "Platelets",
+        "Neurons"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 38,
+      "question": "Blood component important for clotting?",
+      "options": [
+        "Platelets",
+        "Red blood cells",
+        "White blood cells",
+        "Neurons"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 39,
+      "question": "Sound cannot normally travel through?",
+      "options": [
+        "Vacuum",
+        "Air",
+        "Water",
+        "Steel"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 40,
+      "question": "SI unit of force?",
+      "options": [
+        "Newton",
+        "Joule",
+        "Pascal",
+        "Watt"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 41,
+      "question": "Atmospheric layer where most weather occurs?",
+      "options": [
+        "Troposphere",
+        "Thermosphere",
+        "Exosphere",
+        "Mesosphere"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 42,
+      "question": "Liquid water changing to vapour?",
+      "options": [
+        "Evaporation",
+        "Condensation",
+        "Freezing",
+        "Melting"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 43,
+      "question": "Largest continent?",
+      "options": [
+        "Asia",
+        "Africa",
+        "Europe",
+        "Australia"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 44,
+      "question": "President is elected by?",
+      "options": [
+        "An electoral college",
+        "Direct vote of every citizen",
+        "Supreme Court",
+        "Prime Minister"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 45,
+      "question": "Prime Minister is appointed by?",
+      "options": [
+        "President",
+        "Chief Justice",
+        "Speaker",
+        "Election Commission"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 46,
+      "question": "Body conducting parliamentary elections?",
+      "options": [
+        "Election Commission of India",
+        "UPSC",
+        "Finance Commission",
+        "NITI Aayog"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 47,
+      "question": "Supreme Court is the highest court of?",
+      "options": [
+        "India",
+        "Assam only",
+        "A district",
+        "A municipality"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 48,
+      "question": "Fundamental Rights are mainly in?",
+      "options": [
+        "Part III",
+        "Part I",
+        "Part IV",
+        "Part V"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 49,
+      "question": "Directive Principles are in?",
+      "options": [
+        "Part IV",
+        "Part III",
+        "Part II",
+        "Part VI"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 50,
+      "question": "Parliament includes President, Lok Sabha and?",
+      "options": [
+        "Rajya Sabha",
+        "Supreme Court",
+        "Election Commission",
+        "NITI Aayog"
+      ],
+      "answer": 0,
+      "explanation": ""
+    }
+  ],
+  "mock_test": {
+    "duration_minutes": 25,
+    "marks": 30,
+    "negative_marking": false,
+    "questions": [
+      {
+        "id": 1,
+        "question": "Capital of Assam?",
+        "options": [
+          "Dispur",
+          "Guwahati",
+          "Jorhat",
+          "Dibrugarh"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 2,
+        "question": "Constitutional head of the Union?",
+        "options": [
+          "President",
+          "Prime Minister",
+          "Chief Justice",
+          "Speaker"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 3,
+        "question": "House directly elected by the people?",
+        "options": [
+          "Lok Sabha",
+          "Rajya Sabha",
+          "Supreme Court",
+          "Legislative Council"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 4,
+        "question": "Revolt of 1857 began at?",
+        "options": [
+          "Meerut",
+          "Delhi",
+          "Kanpur",
+          "Lucknow"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 5,
+        "question": "Gupta period is known for advances in?",
+        "options": [
+          "Science and arts",
+          "Only shipping",
+          "Only printing",
+          "Only modern industry"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 6,
+        "question": "Largest Indian state by area?",
+        "options": [
+          "Rajasthan",
+          "Madhya Pradesh",
+          "Maharashtra",
+          "Uttar Pradesh"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 7,
+        "question": "Tropic of Cancer passes through?",
+        "options": [
+          "India",
+          "Sri Lanka",
+          "Nepal only",
+          "Bhutan only"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 8,
+        "question": "Largest planet?",
+        "options": [
+          "Jupiter",
+          "Earth",
+          "Saturn",
+          "Mars"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 9,
+        "question": "Earth's natural satellite?",
+        "options": [
+          "Moon",
+          "Mars",
+          "Venus",
+          "Sun"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 10,
+        "question": "Currency of Japan?",
+        "options": [
+          "Yen",
+          "Won",
+          "Yuan",
+          "Dollar"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 11,
+        "question": "Water boils at standard pressure at?",
+        "options": [
+          "100°C",
+          "0°C",
+          "50°C",
+          "200°C"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 12,
+        "question": "Human heart mainly?",
+        "options": [
+          "Pumps blood",
+          "Digests food",
+          "Exchanges gases",
+          "Forms urine"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 13,
+        "question": "Vitamin associated with sunlight?",
+        "options": [
+          "Vitamin D",
+          "Vitamin C",
+          "Vitamin B12",
+          "Vitamin K"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 14,
+        "question": "Water and minerals are mainly absorbed by?",
+        "options": [
+          "Roots",
+          "Flowers",
+          "Fruits",
+          "Seeds"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 15,
+        "question": "Majuli is associated with?",
+        "options": [
+          "Brahmaputra",
+          "Ganga",
+          "Yamuna",
+          "Narmada"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 16,
+        "question": "Agricultural festival of Assam?",
+        "options": [
+          "Bihu",
+          "Onam",
+          "Pongal",
+          "Baisakhi"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 17,
+        "question": "Central bank of India?",
+        "options": [
+          "Reserve Bank of India",
+          "State Bank of India",
+          "SEBI",
+          "NABARD"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 18,
+        "question": "Inflation generally means?",
+        "options": [
+          "Rise in general price level",
+          "Fall in population",
+          "Rise in rainfall",
+          "Fall in literacy"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 19,
+        "question": "Blood cells mainly fighting infection?",
+        "options": [
+          "White blood cells",
+          "Red blood cells",
+          "Platelets",
+          "Neurons"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 20,
+        "question": "Sound cannot normally travel through?",
+        "options": [
+          "Vacuum",
+          "Air",
+          "Water",
+          "Steel"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 21,
+        "question": "Atmospheric layer where most weather occurs?",
+        "options": [
+          "Troposphere",
+          "Thermosphere",
+          "Exosphere",
+          "Mesosphere"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 22,
+        "question": "Largest continent?",
+        "options": [
+          "Asia",
+          "Africa",
+          "Europe",
+          "Australia"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 23,
+        "question": "Prime Minister is appointed by?",
+        "options": [
+          "President",
+          "Chief Justice",
+          "Speaker",
+          "Election Commission"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 24,
+        "question": "Supreme Court is the highest court of?",
+        "options": [
+          "India",
+          "Assam only",
+          "A district",
+          "A municipality"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 25,
+        "question": "Directive Principles are in?",
+        "options": [
+          "Part IV",
+          "Part III",
+          "Part II",
+          "Part VI"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 26,
+        "question": "Constitution of India came into force on?",
+        "options": [
+          "26 January 1950",
+          "15 August 1947",
+          "26 November 1949",
+          "2 October 1950"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 27,
+        "question": "Smallest Indian state by area?",
+        "options": [
+          "Goa",
+          "Sikkim",
+          "Tripura",
+          "Manipur"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 28,
+        "question": "SI unit of electric current?",
+        "options": [
+          "Ampere",
+          "Volt",
+          "Ohm",
+          "Watt"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 29,
+        "question": "One-horned rhinoceros is a major symbol of?",
+        "options": [
+          "Assam",
+          "Goa",
+          "Punjab",
+          "Rajasthan"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 30,
+        "question": "Liquid water changing to vapour?",
+        "options": [
+          "Evaporation",
+          "Condensation",
+          "Freezing",
+          "Melting"
+        ],
+        "answer": 0
+      }
+    ]
+  }
+}

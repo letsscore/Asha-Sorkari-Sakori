@@ -1,0 +1,952 @@
+{
+  "title": "Reasoning — Foundation",
+  "topics": [
+    [
+      "Analogy & Classification",
+      "Identify the relationship or the item that does not share the common property."
+    ],
+    [
+      "Series",
+      "Use differences, ratios, alternating patterns and alphabet positions."
+    ],
+    [
+      "Coding-Decoding",
+      "Compare letter transformations and use A=1 to Z=26 where helpful."
+    ],
+    [
+      "Blood Relations & Direction",
+      "Draw family trees and simple compass diagrams."
+    ],
+    [
+      "Ranking & Venn Diagrams",
+      "Use rank formulas and set intersections."
+    ]
+  ],
+  "practice_questions": [
+    {
+      "id": 1,
+      "question": "Odd one out: 2,4,6,9",
+      "options": [
+        "2",
+        "4",
+        "6",
+        "9"
+      ],
+      "answer": 3,
+      "explanation": ""
+    },
+    {
+      "id": 2,
+      "question": "2,4,6,8,?",
+      "options": [
+        "9",
+        "10",
+        "11",
+        "12"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 3,
+      "question": "5,10,15,20,?",
+      "options": [
+        "22",
+        "24",
+        "25",
+        "30"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 4,
+      "question": "A,C,E,G,?",
+      "options": [
+        "H",
+        "I",
+        "J",
+        "K"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 5,
+      "question": "B,D,F,H,?",
+      "options": [
+        "I",
+        "J",
+        "K",
+        "L"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 6,
+      "question": "If A=1, D=?",
+      "options": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 7,
+      "question": "Book:Read :: Food:?",
+      "options": [
+        "Cook",
+        "Eat",
+        "Buy",
+        "Sell"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 8,
+      "question": "Bird:Fly :: Fish:?",
+      "options": [
+        "Run",
+        "Swim",
+        "Jump",
+        "Crawl"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 9,
+      "question": "Doctor:Hospital :: Teacher:?",
+      "options": [
+        "Court",
+        "School",
+        "Farm",
+        "Bank"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 10,
+      "question": "Odd one: Apple,Mango,Carrot,Banana",
+      "options": [
+        "Apple",
+        "Mango",
+        "Carrot",
+        "Banana"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 11,
+      "question": "CAT→DBU, DOG→?",
+      "options": [
+        "EPH",
+        "EOG",
+        "DPH",
+        "FPH"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 12,
+      "question": "PEN→QFO, CAT→?",
+      "options": [
+        "DBU",
+        "CBU",
+        "DZS",
+        "DBT"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 13,
+      "question": "Opposite of EAST?",
+      "options": [
+        "West",
+        "South",
+        "North",
+        "North-East"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 14,
+      "question": "Facing North, turn right?",
+      "options": [
+        "West",
+        "East",
+        "South",
+        "North"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 15,
+      "question": "Facing East, turn left?",
+      "options": [
+        "North",
+        "South",
+        "West",
+        "East"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 16,
+      "question": "Ravi taller than Amit but shorter than Sohan. Tallest?",
+      "options": [
+        "Ravi",
+        "Amit",
+        "Sohan",
+        "Cannot say"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 17,
+      "question": "7th top, 14th bottom. Total?",
+      "options": [
+        "20",
+        "21",
+        "22",
+        "23"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 18,
+      "question": "5th from left in 20. From right?",
+      "options": [
+        "14",
+        "15",
+        "16",
+        "17"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 19,
+      "question": "Mother's brother?",
+      "options": [
+        "Father",
+        "Uncle",
+        "Cousin",
+        "Grandfather"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 20,
+      "question": "Father's sister?",
+      "options": [
+        "Aunt",
+        "Mother",
+        "Niece",
+        "Cousin"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 21,
+      "question": "Brother's daughter?",
+      "options": [
+        "Sister",
+        "Niece",
+        "Aunt",
+        "Mother"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 22,
+      "question": "Sister's son?",
+      "options": [
+        "Nephew",
+        "Uncle",
+        "Brother",
+        "Cousin"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 23,
+      "question": "Alphabetically first?",
+      "options": [
+        "Apple",
+        "Apply",
+        "April",
+        "Apt"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 24,
+      "question": "Different shape?",
+      "options": [
+        "Square",
+        "Triangle",
+        "Circle",
+        "Cube"
+      ],
+      "answer": 3,
+      "explanation": ""
+    },
+    {
+      "id": 25,
+      "question": "1,4,9,16,?",
+      "options": [
+        "20",
+        "24",
+        "25",
+        "36"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 26,
+      "question": "3,6,12,24,?",
+      "options": [
+        "36",
+        "42",
+        "48",
+        "54"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 27,
+      "question": "81,27,9,3,?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "6"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 28,
+      "question": "All roses are flowers. Definitely true?",
+      "options": [
+        "All roses are flowers",
+        "All roses are red",
+        "No roses are red",
+        "All red are roses"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 29,
+      "question": "Venn intersection means?",
+      "options": [
+        "Common elements",
+        "Unrelated elements",
+        "Outside only",
+        "Universal set"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 30,
+      "question": "P east of Q; R north of P. R from Q?",
+      "options": [
+        "North-East",
+        "North-West",
+        "South-East",
+        "South-West"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 31,
+      "question": "A south of B; C east of A. C from B?",
+      "options": [
+        "North-East",
+        "South-East",
+        "South-West",
+        "North-West"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 32,
+      "question": "Z,X,V,T,?",
+      "options": [
+        "S",
+        "R",
+        "Q",
+        "P"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 33,
+      "question": "10,20,40,80,?",
+      "options": [
+        "100",
+        "120",
+        "160",
+        "180"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 34,
+      "question": "1 January Monday. 2 January?",
+      "options": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Sunday"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 35,
+      "question": "Today Friday. After 3 days?",
+      "options": [
+        "Saturday",
+        "Sunday",
+        "Monday",
+        "Tuesday"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 36,
+      "question": "Hand:Glove :: Foot:?",
+      "options": [
+        "Shoe",
+        "Hair",
+        "Face",
+        "Hat"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 37,
+      "question": "Odd number: 11,13,17,21",
+      "options": [
+        "11",
+        "13",
+        "17",
+        "21"
+      ],
+      "answer": 3,
+      "explanation": ""
+    },
+    {
+      "id": 38,
+      "question": "CODE→DPEF, BOOK→?",
+      "options": [
+        "CPPL",
+        "CQQM",
+        "APOJ",
+        "CPPM"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 39,
+      "question": "Shift each letter back: DOG→?",
+      "options": [
+        "CNF",
+        "EPH",
+        "CNE",
+        "DNG"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 40,
+      "question": "A brother of B; B sister of C. A to C?",
+      "options": [
+        "Brother",
+        "Sister",
+        "Father",
+        "Uncle"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 41,
+      "question": "P mother of Q; Q father of R. P to R?",
+      "options": [
+        "Aunt",
+        "Mother",
+        "Grandmother",
+        "Sister"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 42,
+      "question": "3 km north then 3 km east. Direction?",
+      "options": [
+        "North-East",
+        "North-West",
+        "South-East",
+        "South-West"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 43,
+      "question": "Monday=1, Tuesday=2. Friday?",
+      "options": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 44,
+      "question": "Odd: 8,16,24,31,40",
+      "options": [
+        "8",
+        "16",
+        "31",
+        "40"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 45,
+      "question": "AB,CD,EF,?",
+      "options": [
+        "FG",
+        "GH",
+        "HI",
+        "IJ"
+      ],
+      "answer": 1,
+      "explanation": ""
+    },
+    {
+      "id": 46,
+      "question": "100,90,80,70,?",
+      "options": [
+        "50",
+        "55",
+        "60",
+        "65"
+      ],
+      "answer": 2,
+      "explanation": ""
+    },
+    {
+      "id": 47,
+      "question": "Opposite pair?",
+      "options": [
+        "Hot–Cold",
+        "Fast–Quick",
+        "Big–Large",
+        "Start–Begin"
+      ],
+      "answer": 0,
+      "explanation": ""
+    },
+    {
+      "id": 48,
+      "question": "Odd: January,March,May,June",
+      "options": [
+        "January",
+        "March",
+        "May",
+        "June"
+      ],
+      "answer": 3,
+      "explanation": ""
+    },
+    {
+      "id": 49,
+      "question": "Cube faces?",
+      "options": [
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
+      "answer": 1,
+      "explanation": ""
+    }
+  ],
+  "mock_test": {
+    "duration_minutes": 25,
+    "marks": 30,
+    "negative_marking": false,
+    "questions": [
+      {
+        "id": 1,
+        "question": "Odd one out: 2,4,6,9",
+        "options": [
+          "2",
+          "4",
+          "6",
+          "9"
+        ],
+        "answer": 3
+      },
+      {
+        "id": 2,
+        "question": "5,10,15,20,?",
+        "options": [
+          "22",
+          "24",
+          "25",
+          "30"
+        ],
+        "answer": 2
+      },
+      {
+        "id": 3,
+        "question": "B,D,F,H,?",
+        "options": [
+          "I",
+          "J",
+          "K",
+          "L"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 4,
+        "question": "Book:Read :: Food:?",
+        "options": [
+          "Cook",
+          "Eat",
+          "Buy",
+          "Sell"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 5,
+        "question": "Doctor:Hospital :: Teacher:?",
+        "options": [
+          "Court",
+          "School",
+          "Farm",
+          "Bank"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 6,
+        "question": "CAT→DBU, DOG→?",
+        "options": [
+          "EPH",
+          "EOG",
+          "DPH",
+          "FPH"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 7,
+        "question": "Opposite of EAST?",
+        "options": [
+          "West",
+          "South",
+          "North",
+          "North-East"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 8,
+        "question": "Facing East, turn left?",
+        "options": [
+          "North",
+          "South",
+          "West",
+          "East"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 9,
+        "question": "7th top, 14th bottom. Total?",
+        "options": [
+          "20",
+          "21",
+          "22",
+          "23"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 10,
+        "question": "Mother's brother?",
+        "options": [
+          "Father",
+          "Uncle",
+          "Cousin",
+          "Grandfather"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 11,
+        "question": "Brother's daughter?",
+        "options": [
+          "Sister",
+          "Niece",
+          "Aunt",
+          "Mother"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 12,
+        "question": "Alphabetically first?",
+        "options": [
+          "Apple",
+          "Apply",
+          "April",
+          "Apt"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 13,
+        "question": "1,4,9,16,?",
+        "options": [
+          "20",
+          "24",
+          "25",
+          "36"
+        ],
+        "answer": 2
+      },
+      {
+        "id": 14,
+        "question": "81,27,9,3,?",
+        "options": [
+          "0",
+          "1",
+          "2",
+          "6"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 15,
+        "question": "Venn intersection means?",
+        "options": [
+          "Common elements",
+          "Unrelated elements",
+          "Outside only",
+          "Universal set"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 16,
+        "question": "A south of B; C east of A. C from B?",
+        "options": [
+          "North-East",
+          "South-East",
+          "South-West",
+          "North-West"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 17,
+        "question": "10,20,40,80,?",
+        "options": [
+          "100",
+          "120",
+          "160",
+          "180"
+        ],
+        "answer": 2
+      },
+      {
+        "id": 18,
+        "question": "Today Friday. After 3 days?",
+        "options": [
+          "Saturday",
+          "Sunday",
+          "Monday",
+          "Tuesday"
+        ],
+        "answer": 2
+      },
+      {
+        "id": 19,
+        "question": "Odd number: 11,13,17,21",
+        "options": [
+          "11",
+          "13",
+          "17",
+          "21"
+        ],
+        "answer": 3
+      },
+      {
+        "id": 20,
+        "question": "Shift each letter back: DOG→?",
+        "options": [
+          "CNF",
+          "EPH",
+          "CNE",
+          "DNG"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 21,
+        "question": "P mother of Q; Q father of R. P to R?",
+        "options": [
+          "Aunt",
+          "Mother",
+          "Grandmother",
+          "Sister"
+        ],
+        "answer": 2
+      },
+      {
+        "id": 22,
+        "question": "Monday=1, Tuesday=2. Friday?",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 23,
+        "question": "AB,CD,EF,?",
+        "options": [
+          "FG",
+          "GH",
+          "HI",
+          "IJ"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 24,
+        "question": "Opposite pair?",
+        "options": [
+          "Hot–Cold",
+          "Fast–Quick",
+          "Big–Large",
+          "Start–Begin"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 25,
+        "question": "Cube faces?",
+        "options": [
+          "4",
+          "6",
+          "8",
+          "12"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 26,
+        "question": "2,4,6,8,?",
+        "options": [
+          "9",
+          "10",
+          "11",
+          "12"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 27,
+        "question": "PEN→QFO, CAT→?",
+        "options": [
+          "DBU",
+          "CBU",
+          "DZS",
+          "DBT"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 28,
+        "question": "Sister's son?",
+        "options": [
+          "Nephew",
+          "Uncle",
+          "Brother",
+          "Cousin"
+        ],
+        "answer": 0
+      },
+      {
+        "id": 29,
+        "question": "Z,X,V,T,?",
+        "options": [
+          "S",
+          "R",
+          "Q",
+          "P"
+        ],
+        "answer": 1
+      },
+      {
+        "id": 30,
+        "question": "3 km north then 3 km east. Direction?",
+        "options": [
+          "North-East",
+          "North-West",
+          "South-East",
+          "South-West"
+        ],
+        "answer": 0
+      }
+    ]
+  }
+}
