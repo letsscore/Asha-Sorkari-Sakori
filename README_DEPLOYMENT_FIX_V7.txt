@@ -21,3 +21,5 @@ Expected result:
 Free Foundation -> account/enrolment check -> live module interface ->
 General Knowledge / Aptitude / Reasoning / English -> Basic Notes ->
 50 Practice Questions -> 30-question Mock -> saved results/activity.
+
+V8 navigation fix: Free Foundation category buttons and section tabs now use delegated click handling so dynamically rendered buttons remain clickable. No Firebase rules/config change is required.
