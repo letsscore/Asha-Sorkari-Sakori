@@ -48,21 +48,43 @@ export async function renderFreeFoundationCourse(root,user,course){
   </div>`;
 
   const content=root.querySelector('#ff-content');
-  root.querySelectorAll('.ff-tabs button').forEach(btn=>btn.addEventListener('click',()=>{
-    root.querySelectorAll('.ff-tabs button').forEach(x=>x.classList.remove('active'));
-    btn.classList.add('active'); mode=btn.dataset.mode; render();
-  }));
+
+  // Robust navigation: use delegated click handlers so dynamically re-rendered
+  // category buttons always remain clickable on mobile and desktop.
+  root.addEventListener('click', (event) => {
+    const tab = event.target.closest('.ff-tabs button[data-mode]');
+    if (tab) {
+      event.preventDefault();
+      mode = tab.dataset.mode;
+      setActiveTab();
+      render();
+      return;
+    }
+
+    const category = event.target.closest('[data-cat]');
+    if (category && root.contains(category)) {
+      event.preventDefault();
+      event.stopPropagation();
+      const nextCategory = category.dataset.cat;
+      if (!FREE_FOUNDATION[nextCategory]) return;
+      current = nextCategory;
+      practiceState = null;
+      mockState = null;
+      mode = 'notes';
+      render();
+      trackActivity(user,'free_course_category_open',{courseId:course.id,category:current}).catch(()=>{});
+    }
+  });
 
   function categoryPicker(){
     return `<div class="ff-category-picker">${CATS.map(c=>`<button class="${c.id===current?'selected':''}" data-cat="${c.id}"><span>${escText(c.title)}</span><small>5 topics · 50 practice · 30 mock</small></button>`).join('')}</div>`;
   }
-  function bindCategories(){root.querySelectorAll('[data-cat]').forEach(b=>b.addEventListener('click',()=>{current=b.dataset.cat;practiceState=null;mockState=null;render();trackActivity(user,'free_course_category_view',{courseId:course.id,category:current});}));}
+  function bindCategories(){ /* category navigation handled by delegated root listener */ }
 
   function overview(){
     content.innerHTML=`<div class="ff-section-head"><span class="eyebrow">START HERE</span><h2>Build the basics before premium preparation</h2><p>This limited foundation course covers the essential patterns an aspirant should know first. Premium courses remain separate for deeper and broader preparation.</p></div>
     <div class="ff-category-grid">${CATS.map(c=>`<article class="ff-category-card"><div class="ff-icon">${escText(c.title[0])}</div><span class="course-badge free">FREE</span><h3>${escText(c.title)}</h3><p>5 selected topics</p><div class="ff-mini-stats"><b>50</b><span>Practice</span><b>30</b><span>Mock</span></div><button class="btn small full" data-cat="${c.id}">Open Category</button></article>`).join('')}</div>
     <div class="ff-how"><div><b>01</b><h3>Read the notes</h3><p>Review the five selected foundation topics in each category.</p></div><div><b>02</b><h3>Practise 50 questions</h3><p>Attempt the category practice set and check your performance.</p></div><div><b>03</b><h3>Take the mock</h3><p>Finish a 30-question timed mock and save your result to your account.</p></div></div>`;
-    root.querySelectorAll('[data-cat]').forEach(b=>b.addEventListener('click',()=>{current=b.dataset.cat;mode='notes';root.querySelectorAll('.ff-tabs button').forEach(x=>x.classList.toggle('active',x.dataset.mode==='notes'));render();trackActivity(user,'free_course_category_open',{courseId:course.id,category:current});}));
   }
 
   function notes(){
