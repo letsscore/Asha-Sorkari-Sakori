@@ -91,7 +91,7 @@
       "$purchaseId": {
         ".read": "auth != null && (data.child('userId').val() === auth.uid || root.child('admins').child(auth.uid).val() === true)",
         ".write": "auth != null && (root.child('admins').child(auth.uid).val() === true || !data.exists() && newData.child('userId').val() === auth.uid)",
-        ".validate": "newData.child('userId').val() === auth.uid && newData.child('courseId').isString() && newData.child('courseId').val().length > 0 && newData.child('amount').isNumber() && newData.child('amount').val() > 0 && newData.child('status').val() === 'pending' && newData.child('transactionId').isString() && newData.child('transactionId').val().length >= 6"
+        ".validate": "auth != null && (root.child('admins').child(auth.uid).val() === true || (newData.child('userId').val() === auth.uid && newData.child('courseId').isString() && newData.child('courseId').val().length > 0 && newData.child('amount').isNumber() && newData.child('amount').val() > 0 && newData.child('status').val() === 'pending' && newData.child('transactionId').isString() && newData.child('transactionId').val().length >= 6))"
       },
       ".indexOn": [
         "userId",
