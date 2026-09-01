@@ -1,0 +1,39 @@
+{
+  "programme": "Free Foundation Course",
+  "purpose": "Coaching-centre style foundation programme; advanced/premium coverage intentionally deferred.",
+  "modules": [
+    {
+      "id": "gk",
+      "title": "General Knowledge",
+      "chapters": 5,
+      "practice": 50,
+      "mock": 30
+    },
+    {
+      "id": "aptitude",
+      "title": "Aptitude",
+      "chapters": 5,
+      "practice": 50,
+      "mock": 30
+    },
+    {
+      "id": "reasoning",
+      "title": "Reasoning",
+      "chapters": 5,
+      "practice": 50,
+      "mock": 30
+    },
+    {
+      "id": "english",
+      "title": "English",
+      "chapters": 5,
+      "practice": 50,
+      "mock": 30
+    }
+  ],
+  "totals": {
+    "chapters": 20,
+    "practice_questions": 200,
+    "mock_questions": 120
+  }
+}
