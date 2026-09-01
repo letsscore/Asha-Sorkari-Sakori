@@ -3,6 +3,7 @@ import { trackActivity, esc, formatDate } from './ui.js';
 import { FREE_FOUNDATION } from './free-foundation-data.js';
 
 const CATS = Object.values(FREE_FOUNDATION);
+const CATEGORY_BY_ID = Object.fromEntries(CATS.map(c => [c.id, c]));
 const CATEGORY_LABELS = { gk:'General Knowledge', ap:'Aptitude', re:'Reasoning', en:'English' };
 
 function shuffleQuestion(q){
@@ -66,7 +67,7 @@ export async function renderFreeFoundationCourse(root,user,course){
       event.preventDefault();
       event.stopPropagation();
       const nextCategory = category.dataset.cat;
-      if (!FREE_FOUNDATION[nextCategory]) return;
+      if (!CATEGORY_BY_ID[nextCategory]) return;
       current = nextCategory;
       practiceState = null;
       mockState = null;
