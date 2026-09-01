@@ -1,6 +1,6 @@
 import {onAuthStateChanged,dbGet,dbSet,dbPush,dbUpdate} from './firebase.js';
 import {EXAMS,COURSES,DEMO_TESTS,PAYMENT} from './data.js';
-import { renderFreeFoundationCourse } from './free-foundation-v11.js';
+import { renderFreeFoundationCourse } from './free-foundation-v13.js';
 import {header,footer,esc,trackActivity,logout,formatMoney,formatDate} from './ui.js';
 
 header(); footer();
