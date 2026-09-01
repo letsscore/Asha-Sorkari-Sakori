@@ -6,7 +6,7 @@ export const EXAMS = [
   {id:'other',name:'Other Govt. Exams',short:'SSC, Railway, Banking & more',tag:'OTHER EXAMS',icon:'+',desc:'A growing preparation library for other central and state government examinations.'}
 ];
 
-export const PAYMENT={upiId:'hussain.abidur@ybl',payeeName:'Asha Sorkari Sakori'};
+export const PAYMENT={upiId:'abidurhussain2@okhdfcbank',payeeName:'Acquiring knowledge'};
 
 export const COURSES=[
  {id:'free-foundation',title:'Free Foundation',examId:'all',type:'free',price:0,icon:'F',label:'LIMITED • FREE',desc:'A genuine starter course for aspirants who want to build fundamentals before moving to premium preparation.',highlights:['GK — selected topics','Aptitude — selected topics','Reasoning — selected topics','English — selected topics','Basic exam strategy & guidance']},
