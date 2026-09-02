@@ -1,0 +1,20 @@
+ASHA SORKARI SAKORI — COMPLETE DEPLOYMENT PACKAGE
+
+Includes:
+- Free Foundation V13
+- ADRE Premium V2
+- Static UPI QR/payment flow
+- Payment verification/approval fix
+- Existing authentication/admin structure
+
+IMPORTANT:
+1. Upload the CONTENTS of this package to the GitHub repository root.
+2. Replace existing files when GitHub asks.
+3. Do not upload the ZIP itself.
+4. Firebase Realtime Database Rules are included in firebase-rtdb.rules.json.
+   Paste/publish those rules in Firebase Console if your deployed rules differ.
+5. After deployment, log out and log back into the admin account before testing.
+6. Do not mix these files with older V8/V9/V10/V11 payment/admin files.
+
+The Free Foundation content is kept as a separate V13 section and is not replaced
+by ADRE Premium content.
